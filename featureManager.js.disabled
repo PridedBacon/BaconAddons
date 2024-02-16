@@ -1,0 +1,48 @@
+import { NonPooledThread, RequireNoCache } from "./utils/utils";
+import { MSGPREFIX } from "./utils/utils";
+
+class FeatureManager {
+    constructor() {
+        this.features = new Map([
+            ["commandmanager", "./commandManager.js"],
+            ["config", "./config.js"],
+            ["pests", "./features/garden/pests.js"],
+            ["f7predevicestonk", "./features/dungeons/F7preDeviceStonk.js"],
+            ["partycommands", "./features/chat/partyCommands.js"],
+            ["ghostkey", "./features/dungeons/ghostKey.js"],
+            ["triggerbot", "./features/dungeons/triggerbot.js"],
+            ["harpsolver", "./features/misc/harpSolver.js"],
+            ["dungeonhighlight", "./features/dungeons/dungeonHighlight.js"],
+            //["autoterms", "./features/dungeons/autoTerms.js"],
+            //[, "./features/general/antiCarpet.js"]
+            //[, "./features/esp/customMobESP.js"],
+            //[, "./features/dungeons/dungeonRoutes.js"],
+        ]);
+    }
+
+    loadAllFeatures() {
+        this.features.forEach((value, key) => this.loadFeature(key));
+    }
+
+    loadFeature(featureName) {
+        let feature = featureName.toLowerCase();
+        if (!this.features.has(feature)) {
+            ChatLib.chat(MSGPREFIX + "No Feature named &a`" + feature + "`&e!");
+            print("[Bacon] No feature named " + feature + "! Could not (re-)load");
+            return;
+        }
+        new NonPooledThread(() => {
+            try {
+                RequireNoCache(this.features.get(feature));
+                print("[Bacon] Successfully loaded Feature: " + feature);
+            } catch (e) {
+                ChatLib.chat(MSGPREFIX + "Error loading Feature &a`" + feature + "`&e!");
+                print(
+                    `[Bacon] Could not load Feature ${feature} (${this.features.get(feature)})! Stacktrace:\n${e.stack}`
+                );
+            }
+        }).start();
+    }
+}
+
+export default new FeatureManager();

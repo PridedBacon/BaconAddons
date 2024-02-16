@@ -1,0 +1,42 @@
+import Config from "../../config";
+import { registerWhen, MSGPREFIX } from "../../utils/utils";
+import PogObject from "../../../PogData";
+
+let ESPconf = new PogObject(
+    "BaconAddons",
+    {
+        locations: { All: {}, Dungeon: {} },
+    },
+    "./data/ESPconfig.json"
+);
+
+registerWhen(
+    register("step", () => {
+        World.getAllEntities().forEach((entity) => {
+            if (!entity || !(entity instanceof Entity)) return;
+            print(entity.getName() + " " + entity.entity.func_95999_t());
+        });
+    }).setFps(1),
+    () => Config.enableCustomESP
+);
+
+registerWhen(
+    register("command", (...args) => {
+        switch (args[0]) {
+            case "add":
+                break;
+            case "remove":
+                break;
+            case "list":
+                break;
+            default:
+                break;
+        }
+    }).setName("esp"),
+    () => Config.enableCustomESP
+);
+
+//For each Island Type
+//For each Mob Type
+//For each Mob
+//=>Config
