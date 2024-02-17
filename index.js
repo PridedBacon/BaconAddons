@@ -10,6 +10,7 @@ import "./features/dungeons/triggerbot.js";
 import "./features/misc/harpSolver.js";
 import "./features/dungeons/dungeonHighlight.js";
 import "./features/dungeons/autoSuperbounce.js";
+import "./features/dungeons/breakGhostblock.js";
 //import "./features/dungeons/autoTerms.js";
 //import "./features/general/antiCarpet.js"];
 //import "./features/esp/customMobESP.js";
