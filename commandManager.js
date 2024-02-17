@@ -1,7 +1,6 @@
 import Config from "./config";
 import { MSGPREFIX } from "./utils/utils";
 
-//import featureManager from "./featureManager";
 import { createGhostPick } from "./commands/ghostpick";
 import { addToPCBlocklist, removeFromPCBlocklist, getPCBlocklist } from "./features/chat/partyCommands";
 
@@ -48,19 +47,6 @@ register("command", (...args) => {
                         break;
                 }
                 break;
-            /*
-            case "load":
-                if (args[1]) {
-                    ChatLib.chat(MSGPREFIX + "Reloading Feature &a`" + args[1] + "`&e!");
-                    featureManager.loadFeature(args[1]);
-                    ChatLib.chat(MSGPREFIX + "Done!");
-                } else {
-                    ChatLib.chat(MSGPREFIX + "Reloading all Features");
-                    featureManager.loadAllFeatures();
-                    ChatLib.chat(MSGPREFIX + "Done!");
-                }
-                break;
-                */
             default:
                 //case "help":
                 let messages = [
@@ -70,7 +56,6 @@ register("command", (...args) => {
                     `&7/bacon &dconfig/cnf/settings &7- &8&oOpens the config menu.`,
                     `&7/bacon &dgpick <slot> <tool> <level> &7- &8&oCreates a Ghost pickaxe in the specified slot.`,
                     `&7/bacon &dpcblocklist [add/remove/list] &7- &8&oAdd/Remove/List Players from the Party-Commands Blocklist.`,
-                    //`&7/bacon &dload <name> &7- &8&oReload specified Feature(s) => Name in FeatureManager`,
                     `\n\n`,
                     //`&c&l${ChatLib.getChatBreak(" ")}`
                 ];
@@ -78,6 +63,6 @@ register("command", (...args) => {
                 break;
         }
 })
-    .setTabCompletions("gpick", "settings", "pcblocklist", /*"load",*/ "help")
+    .setTabCompletions("gpick", "settings", "pcblocklist", "help")
     .setName("bac", true)
     .setAliases("bacon");
