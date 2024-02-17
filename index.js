@@ -1,7 +1,3 @@
-//import featureManager from "./featureManager";
-
-//featureManager.loadAllFeatures();
-
 import { MSGPREFIX } from "./utils/utils";
 
 import "./commandManager";
