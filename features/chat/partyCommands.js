@@ -8,7 +8,7 @@ let blocklist = new PogObject(
     "BaconAddons",
     {
         igns: [],
-        trustedPlayers: ["taxzero", "extrabenny", "taxzero11"],
+        trustedPlayers: ["taxzero", "extrabenny", "taxzero11", "pridedbacon2279"],
     },
     "./data/partyCommandsBlocklist.json"
 );
