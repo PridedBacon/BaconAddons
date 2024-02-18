@@ -40,12 +40,12 @@ class Config {
 
 
     //Carpet Remover Toggle
-    @SwitchProperty({
-        name: "Anti Carpet - Force Disabled!",
-        description: "Removes Carpets near you, so you get laggedback less",
-        category: "General",
-        subcategory: "Lagback"
-    })
+    //@SwitchProperty({
+    //    name: "Anti Carpet - Force Disabled!",
+    //    description: "Removes Carpets near you, so you get laggedback less",
+    //    category: "General",
+    //    subcategory: "Lagback"
+    //})
     enableAntiCarpets = false
 
 
@@ -53,12 +53,12 @@ class Config {
     //----------Dungeons----------
 
     //Auto Terms
-    @SwitchProperty({
-        name: "Enable Auto Terms",
-        description: "Automatically Clicks in Terminals",
-        category: "Dungeons",
-        subcategory: "Auto Terms"
-    })
+    //@SwitchProperty({
+    //    name: "Enable Auto Terms",
+    //    description: "Automatically Clicks in Terminals",
+    //    category: "Dungeons",
+    //    subcategory: "Auto Terms"
+    //})
     enableAutoTerms = false
     
     
@@ -138,6 +138,15 @@ class Config {
     enableGhostBlockKeybind = false
 
 
+    //Ghost Key
+    @SwitchProperty({
+        name: "Create Ghostblocks on break",
+        description: "Replaces the reappearing Block with air",
+        category: "Dungeons",
+    })
+    enableBreakGhostblock = false
+
+
 
     //Triggerbot
     //Enable
@@ -177,13 +186,13 @@ class Config {
 
 
     //Dungeon Routes Config
-    @ButtonProperty({
-        name: "Dungeon Routes Config",
-        description: "Settings for Dungeon Routes",
-        category: "Dungeons",
-        subcategory: "Dungeon Routes",
-        placeholder: "Settings"
-    })
+    //@ButtonProperty({
+    //    name: "Dungeon Routes Config",
+    //    description: "Settings for Dungeon Routes",
+    //    category: "Dungeons",
+    //    subcategory: "Dungeon Routes",
+    //    placeholder: "Settings"
+    //})
     openDungeonRoutesConfig() {
         dungeonRoutesConfig.openGUI()
     };
@@ -220,12 +229,23 @@ class Config {
 
 
     //----------ESP----------
-    @SwitchProperty({
-        name: "Enable Custom ESP",
-        description: "Lets you set custom ESP's",
-        category: "ESP",
-    })
+    //@SwitchProperty({
+    //    name: "Enable Custom ESP",
+    //    description: "Lets you set custom ESP's",
+    //    category: "ESP",
+    //})
     enableCustomESP = false
+
+    //ESP Config
+    //@ButtonProperty({
+    //    name: "Custom ESP Config",
+    //    description: "Settings for Custom ESP",
+    //    category: "ESP",
+    //    placeholder: "Settings"
+    //})
+    openCustomESPConfig() {
+        //gui.openGUI()
+    };
 
 
 

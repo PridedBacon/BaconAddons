@@ -116,7 +116,7 @@ registerWhen(
         }
     }),
     () => Config.enableTriggerBot,
-    "Dungeon"
+    ["Dungeon", "Crystal Hollows"]
 );
 
 registerWhen(

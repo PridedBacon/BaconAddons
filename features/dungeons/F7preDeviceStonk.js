@@ -9,7 +9,6 @@ if (!FileLib.exists("BaconAddons", "./data/F7preDeviceStonk.json")) {
     fileNotFound = true;
 } else {
     blocks = JSON.parse(FileLib.read("BaconAddons", "./data/F7preDeviceStonk.json"));
-    //TODO only when enabled
 }
 
 registerWhen(
@@ -38,7 +37,6 @@ function preStonk(delay) {
                 let [x, y, z] = blocks[blockID][i];
                 let block = new BlockPos(x, y, z);
                 World.getWorld().func_175656_a(block.toMCBlock(), blockToPlace);
-                //https://github.com/odtheking/OdinClientCT/blob/OdinCheata/features/M7/IHATEDIORITE.js
             }
         }
     }, delay);

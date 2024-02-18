@@ -1,24 +1,36 @@
 import Skyblock from "../../BloomCore/Skyblock";
 import Vector3 from "../../BloomCore/utils/Vector3";
 
-const checkingTriggers = []; // [[trigger, func]]
-/**
- * Registers and unregisters the trigger depending on the result of the checkFunc. Use with render triggers to reduce lag when they are not being used.
- * @param {() => void} trigger
- * @param {Function} checkFunc
- * @param {String | undefined} [area="All"] - e.g. Dungeon, Garden...
- * @returns
- */
+const checkingTriggers = [];
 export const MSGPREFIX = "&d[Bacon] &e";
 
+/**
+ * Registers and unregisters the trigger depending on the result of the checkFunc. Use with render triggers to reduce lag when they are not being used.
+ * NOTE: Triggers will be executed once a second. For timing based triggers, dont use this!
+ * @param {() => void | Array} trigger
+ * @param {Function} checkFunc
+ * @param {String | Array | undefined} [area="All"] - e.g. Dungeon, Garden...
+ * @returns
+ */
 export const registerWhen = (trigger, checkFunc, area = "All") =>
-    checkingTriggers.push([trigger.unregister(), checkFunc, area]);
+    checkingTriggers.push([
+        trigger?.[Symbol.iterator] ? trigger.map((t) => t.unregister()) : trigger.unregister(),
+        checkFunc,
+        area,
+    ]);
 
 register("step", () => {
     for (let i = 0; i < checkingTriggers.length; i++) {
         let [trigger, func, area] = checkingTriggers[i];
-        if (func() && (area === "All" || area == Skyblock.area)) trigger.register();
-        else trigger.unregister();
+        let areaResult = area;
+
+        if (typeof area === "object") areaResult = area.some((entry) => entry === Skyblock.area || entry === "All");
+        else areaResult = area === Skyblock.area || area === "All";
+
+        let triggerIterable = trigger?.[Symbol.iterator];
+
+        if (func() && areaResult) triggerIterable ? trigger.forEach((t) => t.register()) : trigger.register();
+        else triggerIterable ? trigger.forEach((t) => t.unregister()) : trigger.unregister();
     }
 }).setFps(1);
 

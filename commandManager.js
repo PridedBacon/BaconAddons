@@ -1,7 +1,7 @@
 import Config from "./config";
 import { MSGPREFIX } from "./utils/utils";
 
-import { createGhostPick } from "./commands/ghostpick";
+import { createGhostPick } from "./features/dungeons/ghostpick";
 import { addToPCBlocklist, removeFromPCBlocklist, getPCBlocklist } from "./features/chat/partyCommands";
 
 register("command", (...args) => {
