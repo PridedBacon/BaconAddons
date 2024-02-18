@@ -42,13 +42,14 @@ const isValidSkull = (x, y, z) => {
     return validSkullIDs.has(skullID);
 };
 
-function isValidRoom() {
+function isValidRoom(name = null) {
     try {
         let id = Scoreboard.getLineByIndex(Scoreboard.getLines().length - 1)
             .getName()
             .trim()
             .split(" ")
             .pop();
+        if (name) return id === name;
         return !invalidRooms.has(id);
     } catch (e) {
         return false;
@@ -107,6 +108,12 @@ registerWhen(
         ) {
             if (Player.lookingAt().type.getRegistryName() === "minecraft:skull") {
                 if (!isValidSkull(Player.lookingAt().getX(), Player.lookingAt().getY(), Player.lookingAt().getZ()))
+                    return;
+            } else if (Player.lookingAt().type.getRegistryName() === "minecraft:lever") {
+                if (
+                    isValidRoom("f7") &&
+                    !RegExp(/^minecraft:lever\[facing=up_\w,.*/).test(Player.lookingAt().getState())
+                )
                     return;
             }
             clickedBlocks.push(blockPos);
