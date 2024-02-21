@@ -4,6 +4,6 @@
     "creator": "PridedBacon2279",
     "entry": "index.js",
     "requires": ["Vigilance", "RenderLibV2", "RenderLib", "PogData", "BloomCore", "BeaconBeam", "requestV2"],
-    "version": "1.0.0",
+    "version": "1.0.1",
     "changelog": ["Added this", "an auto updater", "well at least a update message"]
 }
