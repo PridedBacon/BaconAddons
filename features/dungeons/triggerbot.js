@@ -4,7 +4,7 @@ import { rightClick } from "../../utils/OdinUtils";
 import RenderLibV2 from "../../../RenderLibV2";
 import { MCBlockPos } from "../../../BloomCore/utils/Utils";
 
-const clickableBlocks = new Set(["minecraft:chest", "minecraft:lever", "minecraft:skull"]);
+const clickableBlocks = new Set(["minecraft:chest", "minecraft:lever", "minecraft:skull", "minecraft:trapped_chest"]);
 const noGuiBlocks = new Set(["minecraft:lever", "minecraft:skull"]);
 const validSkullIDs = new Set([
     "26bb1a8d-7c66-31c6-82d5-a9c04c94fb02", // Wither Essence
