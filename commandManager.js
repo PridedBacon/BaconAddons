@@ -1,8 +1,11 @@
 import Config from "./config";
+import { downloadLatestVersion } from "./utils/update";
 import { MSGPREFIX } from "./utils/utils";
 
 import { createGhostPick } from "./features/dungeons/ghostpick";
 import { addToPCBlocklist, removeFromPCBlocklist, getPCBlocklist } from "./features/chat/partyCommands";
+
+let isUpdating = false;
 
 register("command", (...args) => {
     if (!args || !args[0]) {
@@ -47,6 +50,14 @@ register("command", (...args) => {
                         break;
                 }
                 break;
+            case "update":
+                if (isUpdating) ChatLib.chat(MSGPREFIX + "BaconAddons is already updating!");
+                else {
+                    isUpdating = true;
+                    ChatLib.chat(MSGPREFIX + "Updating...");
+                    downloadLatestVersion();
+                }
+                break;
             default:
                 //case "help":
                 let messages = [
@@ -56,6 +67,7 @@ register("command", (...args) => {
                     `&7/bacon &dconfig/cnf/settings &7- &8&oOpens the config menu.`,
                     `&7/bacon &dgpick <slot> <tool> <level> &7- &8&oCreates a Ghost pickaxe in the specified slot.`,
                     `&7/bacon &dpcblocklist [add/remove/list] &7- &8&oAdd/Remove/List Players from the Party-Commands Blocklist.`,
+                    `&7/bacon &dupdate &7- &8&o(Re)install the newest version`,
                     `\n\n`,
                     //`&c&l${ChatLib.getChatBreak(" ")}`
                 ];

@@ -5,14 +5,10 @@
     "entry": "index.js",
     "requires": ["Vigilance", "RenderLibV2", "RenderLib", "PogData", "BloomCore", "BeaconBeam", "requestV2"],
     "helpMessage": "&d[Bacon] &eRun &8`/bac`&e or &8`/bac help`&e to get started!",
-    "version": "1.0.0",
+    "version": "1.2",
     "$changelog": {
-        "1.0.0": ["Initial Release", "Many fixes"],
-        "1.0": ["init"],
-        "1.0.1": ["hotfix", ""],
-        "1.1": ["juciy update", "with many", "features"],
-        "1.1.0": [" same thing\\fd"],
-        "2.1": ["V2", "no way11"],
-        "0.999.9999": ["old buggy mess"]
+        "1.0": ["Initial Release!"],
+        "1.1": ["Many new features!"],
+        "1.2": ["Ingame Updater!"]
     }
 }

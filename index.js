@@ -1,3 +1,4 @@
+import { checkForUpdates } from "./utils/update.js";
 import { MSGPREFIX } from "./utils/utils";
 
 import "./commandManager";
@@ -18,3 +19,5 @@ import "./features/dungeons/breakGhostblock.js";
 //import "./features/dungeons/dungeonRoutes.js";
 
 ChatLib.chat(MSGPREFIX + "Loaded!");
+
+checkForUpdates();
