@@ -4,6 +4,7 @@
     "creator": "PridedBacon2279",
     "entry": "index.js",
     "requires": ["Vigilance", "RenderLibV2", "RenderLib", "PogData", "BloomCore", "BeaconBeam", "requestV2"],
-    "version": "1.0.1",
-    "changelog": "Added this"
+    "helpMessage": "&d[Bacon] &eRun &8`/bac`&e or &8`/bac help`&e to get started!",
+    "version": "1.0.0",
+    "$changelog": ["1.0.0", "1.0", "1.0.1", "1.1", "1.1.0", "2.1", "0.999.9999"]
 }
