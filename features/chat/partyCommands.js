@@ -37,45 +37,45 @@ registerWhen(
         }
         if (player == Player.getName() || Date.now() - lastRun < 2500) return;
         lastRun = Date.now();
-        Thread.sleep(420);
-        switch (command.toLowerCase()) {
-            case "warp":
-                sendCommandIfLeaderElseNotify("p warp", "warped Party!", player);
-                break;
-            case "coords":
-            case "where":
-                ChatLib.command(
-                    `pc Current area: ${Skyblock.area ? Skyblock.area : "Lobby/Unkown"}${
-                        Skyblock.subArea && Skyblock.area != Skyblock.subArea ? " (" + Skyblock.subArea + ")" : []
-                    } | X: ${~~Player.getX()} Y: ${~~Player.getY()} Z: ${~~Player.getZ()}`
-                );
-                break;
-            case "allinvite":
-            case "ai":
-                sendCommandIfLeaderElseNotify("p settings allinvite", "toggled All-Invite!", player);
-                break;
-            case "invite":
-            case "inv":
-                sendCommandIfLeaderElseNotify("p invite " + arg, "invited " + arg, player + "!");
-                break;
-            case "ptme":
-                sendCommandIfLeaderElseNotify("p transfer " + player, "transfered the Party to him!", player, true);
-                break;
-            case "pt":
-            case "tp":
-                sendCommandIfLeaderElseNotify(
-                    `p transfer ${arg ? arg : player}`,
-                    `transfered the Party to ${arg ? arg : "him"}!`,
-                    player,
-                    true
-                );
-                break;
-            case "kick":
-                sendCommandIfLeaderElseNotify("p kick " + arg, `kicked ${arg} from the Party!`, player, true);
-                break;
+        setTimeout(() => {
+            switch (command.toLowerCase()) {
+                case "warp":
+                    sendCommandIfLeaderElseNotify("p warp", "warped Party!", player);
+                    break;
+                case "coords":
+                case "where":
+                    ChatLib.command(
+                        `pc x: ${~~Player.getX()}, y: ${~~Player.getY()}, z: ${~~Player.getZ()} | Current area: ${
+                            Skyblock.area ? Skyblock.area : "Lobby/Unkown"
+                        }${Skyblock.subArea && Skyblock.area != Skyblock.subArea ? " (" + Skyblock.subArea + ")" : []}`
+                    );
+                    break;
+                case "allinvite":
+                case "ai":
+                    sendCommandIfLeaderElseNotify("p settings allinvite", "toggled All-Invite!", player);
+                    break;
+                case "invite":
+                case "inv":
+                    sendCommandIfLeaderElseNotify("p invite " + arg, "invited " + arg, player + "!");
+                    break;
+                case "ptme":
+                    sendCommandIfLeaderElseNotify("p transfer " + player, "transfered the Party to him!", player, true);
+                    break;
+                case "pt":
+                case "tp":
+                    sendCommandIfLeaderElseNotify(
+                        `p transfer ${arg ? arg : player}`,
+                        `transfered the Party to ${arg ? arg : "him"}!`,
+                        player,
+                        true
+                    );
+                    break;
+                case "kick":
+                    sendCommandIfLeaderElseNotify("p kick " + arg, `kicked ${arg} from the Party!`, player, true);
+                    break;
 
-            //hypixel broke this
-            /*
+                //hypixel broke this
+                /*
             default:
                 dungRegEx = command.toLowerCase().match(/^[dfm][1-7]/);
                 if (dungRegEx[0] && Skyblock.area) {
@@ -103,7 +103,8 @@ registerWhen(
                 }
                 break;
                 */
-        }
+            }
+        }, 420);
     }).setCriteria(/^Party > [^\w\[]{0,3} ?(?:\[[\w+\+-]+] )?(\w*): !(\w*) ?(\w*).*/),
     () => Config.enablePartyCommands
 );
