@@ -20,4 +20,10 @@ import "./features/dungeons/breakGhostblock.js";
 
 ChatLib.chat(MSGPREFIX + "Loaded!");
 
-checkForUpdates();
+let hasShownUpdateMsg = false;
+register("worldLoad", () => {
+    if (!hasShownUpdateMsg) {
+        hasShownUpdateMsg = true;
+        checkForUpdates();
+    }
+});
