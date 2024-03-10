@@ -7,7 +7,7 @@ const setBlockState = (x, y, z, state) => World.getWorld().func_175656_a(new Jav
 
 function checkStair(stairState, x, y, z) {
     let res = RegExp(/^minecraft:\w*\[facing=(\w*),half=bottom,shape=.*/).exec(stairState);
-    if (res.length > 1) {
+    if (res?.length > 1) {
         let pX = parseInt(Player.getX());
         let pZ = parseInt(Player.getZ());
         switch (res[1]) {
