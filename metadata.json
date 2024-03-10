@@ -12,6 +12,7 @@
         "1.2": ["Ingame Updater!"],
         "1.2.1": ["Added Mimic (Trapped Chest) to Triggerbot, also test updater"],
         "1.2.2": ["Party Commands: Fix Freeze + Update Coords Format for Soopy Waypoints"],
-        "1.2.3": ["Fixed Ingame Updater. Now shows the message on world load, not game start so you can actually see this message xD"]
+        "1.2.3": ["Fixed Ingame Updater. Now shows the message on world load, not game start so you can actually see this message xD"],
+		"1.2.4": ["Added auto replace Stairs with Slabs (lmao)"]
     }
 }

@@ -8,10 +8,11 @@ import {
     @TextProperty,
     @Vigilant,
     @SliderProperty,
-    @NumberProperty
+    @NumberProperty,
+    @ParagraphProperty,
+    @DecimalSliderProperty,
+    Color
 } from '../Vigilance/index';
-
-const Color = Java.type("java.awt.Color")
 
 
 
@@ -147,6 +148,14 @@ class Config {
     enableBreakGhostblock = false
 
 
+    //@SwitchProperty({
+    //    name: "Block Interactions on some Blocks",
+    //    description: "Blocks Interaction with some blocks to allow etherwarping (e.g. hopper)",
+    //    category: "Dungeons",
+    //})
+    enableInteractionStop = false
+
+
 
     //Triggerbot
     //Enable
@@ -208,6 +217,16 @@ class Config {
     enableDungeonHighlight = false
 
 
+    //AutoStonk thru walls
+    @SwitchProperty({
+        name: "Replace Stairs with slabs",
+        description: "Funni feature nobody asked for",
+        category: "Dungeons",
+        subcategory: "Useless"
+    })
+    enableAutoStair = false
+
+
     //----------Garden----------
 
 
@@ -250,6 +269,7 @@ class Config {
 
 
     //----------MISC----------
+
 
     //Harp Solver
     @SwitchProperty({
