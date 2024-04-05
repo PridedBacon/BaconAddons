@@ -1,8 +1,7 @@
 import Config from "../../config";
-import { registerWhen, MSGPREFIX } from "../../utils/utils";
+import { registerWhen } from "../../utils/utils";
 
 const JavaBlockPos = Java.type("net.minecraft.util.BlockPos");
-//const getDistance = (x1, y1, z1, x2, y2, z2) => Math.sqrt((x2 - x1) ** 2 + (y2 - y1) ** 2 + (z2 - z1) ** 2);
 const setBlockState = (x, y, z, state) => World.getWorld().func_175656_a(new JavaBlockPos(x, y, z), state);
 
 function checkStair(stairState, x, y, z) {

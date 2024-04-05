@@ -1,8 +1,11 @@
 import Skyblock from "../../BloomCore/Skyblock";
 import Vector3 from "../../BloomCore/utils/Vector3";
+import { getSkullTexture, getSkyblockItemID } from "../../BloomCore/utils/Utils";
+
+export const MSGPREFIX = "&d[Bacon] &e";
+export const MSGPREFIX_SHORT = "&d[B] &e";
 
 const checkingTriggers = [];
-export const MSGPREFIX = "&d[Bacon] &e";
 
 /**
  * Registers and unregisters the trigger depending on the result of the checkFunc. Use with render triggers to reduce lag when they are not being used.
@@ -140,3 +143,67 @@ export function RequireNoCache(place) {
     CTRequire = new JSLoader.CTRequire(StrongCachingModuleScriptProvider);
     return CTRequire("../" + place);
 }
+
+/**
+ * Gets the texture property of the skull item which the entity is wearing.
+ * @param {Entity} entity - The entity whose skull's texture you want.
+ * @returns {String|null}
+ */
+export const getEntitySkullTextureInSlot = (entity, slot) => {
+    if (!entity || !(entity instanceof Entity)) return null;
+    let helm = entity.getEntity().func_71124_b(4);
+    if (!helm) return null;
+    let item = new Item(helm);
+    if (!item || item.getID() !== 397 || item.getMetadata() !== 3) return null;
+    return getSkullTexture(item);
+};
+
+const farmingToolsID = new Set([
+    "ROOKIE_HOE",
+    "BINGHOE",
+    "BASIC_GARDENING_HOE",
+    "BASIC_GARDENING_AXE",
+    "ADVANCED_GARDENING_HOE",
+    "ADVANCED_GARDENING_AXE",
+    "CACTUS_KNIFE",
+    "FUNGI_CUTTER",
+    "MELON_DICER",
+    "PUMPKIN_DICER",
+    "THEORETICAL_HOE_POTATO",
+    "THEORETICAL_HOE_CANE",
+    "THEORETICAL_HOE_WARTS",
+    "THEORETICAL_HOE_CARROT",
+    "THEORETICAL_HOE_WHEAT_3",
+]);
+
+export const isHoldingFarmingTool = () => {
+    const sbid = getSkyblockItemID(Player.getHeldItem());
+    if (!sbid) return null;
+    const fsbid = RegExp(/(.*?)(?:_\d)?$/).exec(sbid)[1];
+    if (!fsbid) return null;
+    return farmingToolsID.has(fsbid);
+};
+
+const setRotationFunction = Java.type("net.minecraft.entity.Entity").class.getDeclaredMethod(
+    "func_70101_b",
+    java.lang.Float.TYPE,
+    java.lang.Float.TYPE
+);
+setRotationFunction.setAccessible(true);
+
+export const setLooking = (paramYaw, paramPitch, feedback = true) => {
+    const yaw = paramYaw === "~" || !paramYaw ? Player.getYaw() : +paramYaw;
+    const pitch = paramPitch === "~" || !paramPitch ? Player.getPitch() : +paramPitch;
+
+    if (isNaN(yaw)) {
+        if (feedback) ChatLib.chat(`${MSGPREFIX}Invalid Yaw: &c${paramYaw}`);
+        return;
+    }
+    if (isNaN(pitch)) {
+        if (feedback) ChatLib.chat(`${MSGPREFIX}Invalid Pitch: &c${paramPitch}`);
+        return;
+    }
+    if (feedback) ChatLib.chat(`${MSGPREFIX}Setting Rotation to: &a${yaw}&e, &a${pitch}&e!`);
+
+    setRotationFunction.invoke(Player.getPlayer(), new java.lang.Float(yaw), new java.lang.Float(pitch));
+};

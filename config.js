@@ -38,29 +38,6 @@ class Config {
         subcategory: "Chat"
     })
     enablePartyCommands = false
-
-
-    //Carpet Remover Toggle
-    //@SwitchProperty({
-    //    name: "Anti Carpet - Force Disabled!",
-    //    description: "Removes Carpets near you, so you get laggedback less",
-    //    category: "General",
-    //    subcategory: "Lagback"
-    //})
-    enableAntiCarpets = false
-
-
-
-    //----------Dungeons----------
-
-    //Auto Terms
-    //@SwitchProperty({
-    //    name: "Enable Auto Terms",
-    //    description: "Automatically Clicks in Terminals",
-    //    category: "Dungeons",
-    //    subcategory: "Auto Terms"
-    //})
-    enableAutoTerms = false
     
     
     //Slot For Instant Ghost Pick Command
@@ -148,15 +125,6 @@ class Config {
     enableBreakGhostblock = false
 
 
-    //@SwitchProperty({
-    //    name: "Block Interactions on some Blocks",
-    //    description: "Blocks Interaction with some blocks to allow etherwarping (e.g. hopper)",
-    //    category: "Dungeons",
-    //})
-    enableInteractionStop = false
-
-
-
     //Triggerbot
     //Enable
     @SwitchProperty({
@@ -191,20 +159,6 @@ class Config {
     })
     triggerbotAutostonk = false
 
-
-
-
-    //Dungeon Routes Config
-    //@ButtonProperty({
-    //    name: "Dungeon Routes Config",
-    //    description: "Settings for Dungeon Routes",
-    //    category: "Dungeons",
-    //    subcategory: "Dungeon Routes",
-    //    placeholder: "Settings"
-    //})
-    openDungeonRoutesConfig() {
-        dungeonRoutesConfig.openGUI()
-    };
     
 
     //Dungeon Highlight
@@ -237,6 +191,7 @@ class Config {
         subcategory: "Pests"
     })
     highlightPests = false
+
     @ColorProperty({
         name: "Pest Box Color",
         description: "Color of the Box around the Pest",
@@ -245,31 +200,26 @@ class Config {
     })
     colorPestHighlight = Color.WHITE;
 
-
-
-    //----------ESP----------
-    //@SwitchProperty({
-    //    name: "Enable Custom ESP",
-    //    description: "Lets you set custom ESP's",
-    //    category: "ESP",
-    //})
-    enableCustomESP = false
-
-    //ESP Config
-    //@ButtonProperty({
-    //    name: "Custom ESP Config",
-    //    description: "Settings for Custom ESP",
-    //    category: "ESP",
-    //    placeholder: "Settings"
-    //})
-    openCustomESPConfig() {
-        //gui.openGUI()
-    };
+    @SwitchProperty({
+        name: "Auto tp Garden on void",
+        description: "Automatically teleports you to your Garden Spawnpoint when falling into the void while holding a farming tool",
+        category: "Garden",
+        subcategory: "Farming"
+    })
+    enableAutoGardenTP = false
 
 
 
     //----------MISC----------
 
+
+    @SwitchProperty({
+        name: "Enable Dragon Features",
+        description: "Misc Dragon/End Features",
+        category: "Misc",
+        subcategory: "End"
+    })
+    enableDragonFeatures = false
 
     //Harp Solver
     @SwitchProperty({
@@ -293,182 +243,6 @@ class Config {
 
 
 }
-
-
-
-
-@Vigilant("BaconAddons", "Dungeon Routes", {
-    getCategoryComparator: () => (a, b) => {
-        const categories = ["General", "Render"];
-        return categories.indexOf(a.name) - categories.indexOf(b.name);
-    }
-})
-class DungeonRoutesConfig {
-    constructor() {
-        this.initialize(this)
-    }
-
-
-
-    //Dungeon Routes Toggle
-    @SwitchProperty({
-        name: "Dungeon Routes Toggle",
-        description: "Enable Dungeon Routes",
-        category: "Dungeons"
-    })
-    enableDungeonRoutes = false
-
-
-
-
-    @SwitchProperty({
-        name: "Hide Walk Locations",
-        description: "Hides Walking location lines, but still does the logic",
-        category: "Render",
-        subcategory: "Marker Rendering"
-    })
-    hideLocations = false
-    @SwitchProperty({
-        name: "Hide Etherwarps",
-        description: "Hides Etherwarp markers, but still does the logic",
-        category: "Render",
-        subcategory: "Marker Rendering"
-    })
-    hideEtherwarps = false
-    @SwitchProperty({
-        name: "Hide Stonks",
-        description: "Hides Stonk markers, but still does the logic",
-        category: "Render",
-        subcategory: "Marker Rendering"
-    })
-    hideMines = false
-    @SwitchProperty({
-        name: "Hide Interacts",
-        description: "Hides Interact markers, but still does the logic",
-        category: "Render",
-        subcategory: "Marker Rendering"
-    })
-    hideInteracts = false
-    @SwitchProperty({
-        name: "Hide TNTs",
-        description: "Hides TNT markers, but still does the logic",
-        category: "Render",
-        subcategory: "Marker Rendering"
-    })
-    hideTNTs = false
-    @SwitchProperty({
-        name: "Hide Items",
-        description: "Hides Item markers, but still does the logic",
-        category: "Render",
-        subcategory: "Marker Rendering"
-    })
-    hideItems = false
-    @SwitchProperty({
-        name: "Hide Bats",
-        description: "Hides Bat markers, but still does the logic",
-        category: "Render",
-        subcategory: "Marker Rendering"
-    })
-    hideBats = false
-    @SwitchProperty({
-        name: "Hide Pearls",
-        description: "Hides all Pearl markers, but still does the logic",
-        category: "Render",
-        subcategory: "Marker Rendering"
-    })
-    hidePearls = false
-    @SwitchProperty({
-        name: "Hide Sinseekers",
-        description: "Hides Sinseeker markers, but still does the logic",
-        category: "Render",
-        subcategory: "Marker Rendering"
-    })
-    hideSinseekers = false
-    @SwitchProperty({
-        name: "Hide Shadowfurys",
-        description: "Hides Shadowfury markers, but still does the logic",
-        category: "Render",
-        subcategory: "Marker Rendering"
-    })
-    hideShadowfury = false
-
-
-
-    @ColorProperty({
-        name: "Location Line/Arrow Color",
-        category: "Render",
-        //description: "",
-        subcategory: "Colors",
-    })
-    colorLocation = Color.CYAN;
-    @ColorProperty({
-        name: "Etherwarp Marker Color",
-        category: "Render",
-        //description: "",
-        subcategory: "Colors",
-    })
-    colorEtherwarp = Color.BLUE;
-    @ColorProperty({
-        name: "Stonk Marker Color",
-        category: "Render",
-        //description: "",
-        subcategory: "Colors",
-    })
-    colorMine = Color.MAGENTA;
-    @ColorProperty({
-        name: "Interact Marker Color",
-        category: "Render",
-        //description: "",
-        subcategory: "Colors",
-    })
-    colorInteract = Color.GREEN;
-    @ColorProperty({
-        name: "TNT Marker Color",
-        category: "Render",
-        //description: "",
-        subcategory: "Colors",
-    })
-    colorTNT = Color.RED;
-    @ColorProperty({
-        name: "Item Marker Color",
-        category: "Render",
-        //description: "",
-        subcategory: "Colors",
-    })
-    colorItem = Color.PINK;
-    @ColorProperty({
-        name: "Bat Marker Color",
-        category: "Render",
-        //description: "",
-        subcategory: "Colors",
-    })
-    colorBat = Color.ORANGE;
-    @ColorProperty({
-        name: "Pearl Marker Color",
-        category: "Render",
-        //description: "",
-        subcategory: "Colors",
-    })
-    colorPearl = Color.BLUE;
-    @ColorProperty({
-        name: "Sinseeker Marker Color",
-        category: "Render",
-        //description: "",
-        subcategory: "Colors",
-    })
-    colorSinseeker = Color.YELLOW;
-    @ColorProperty({
-        name: "Shadowfury Marker Color",
-        category: "Render",
-        //description: "",
-        subcategory: "Colors",
-    })
-    colorEtherwarp = Color.WHITE;
-
-}
-
-
-export const dungeonRoutesConfig = new DungeonRoutesConfig()
 
 
 export default new Config();

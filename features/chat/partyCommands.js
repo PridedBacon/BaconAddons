@@ -2,16 +2,7 @@ import Config from "../../config";
 import { registerWhen, MSGPREFIX } from "../../utils/utils";
 import Skyblock from "../../../BloomCore/Skyblock";
 import Party from "../../../BloomCore/Party";
-import PogObject from "../../../PogData";
-
-let blocklist = new PogObject(
-    "BaconAddons",
-    {
-        igns: [],
-        trustedPlayers: ["taxzero", "extrabenny", "taxzero11", "pridedbacon2279"],
-    },
-    "./data/partyCommandsBlocklist.json"
-);
+import { isBlocked, isTrusted } from "../../utils/partyCommandsBlocklist";
 
 let lastRun = 0;
 
@@ -27,13 +18,14 @@ let lastRun = 0;
 
 registerWhen(
     register("chat", (player, command, arg) => {
-        if (blocklist.igns.includes(player.toLowerCase())) {
+        if (isBlocked(player.toLowerCase())) {
             ChatLib.chat(
-                new TextComponent(MSGPREFIX + "Blocked Party-Command from &b" + player + "&e! &a&l[UNDO]").setClick(
+                new TextComponent(MSGPREFIX + "Blocked Party-Command from &b" + player + "&e! &a&l[ALLOW]").setClick(
                     "run_command",
                     "/bac pcblocklist remove " + player
                 )
             );
+            return;
         }
         if (player == Player.getName() || Date.now() - lastRun < 2500) return;
         lastRun = Date.now();
@@ -110,7 +102,7 @@ registerWhen(
 );
 
 function sendCommandIfLeaderElseNotify(command, successMSG, player, CheckTrusted = false) {
-    if (CheckTrusted && !blocklist.trustedPlayers.includes(player.toLowerCase())) {
+    if (CheckTrusted && !isTrusted(player.toLowerCase())) {
         ChatLib.chat(MSGPREFIX + player + " is not trusted!");
         return;
     }
@@ -125,35 +117,4 @@ function sendCommandIfLeaderElseNotify(command, successMSG, player, CheckTrusted
     } else {
         ChatLib.chat(MSGPREFIX + "Not Leader!");
     }
-}
-
-export function addToPCBlocklist(ign) {
-    if (blocklist.igns.includes(ign.toLowerCase()) || !ign) return false;
-    blocklist.igns.push(ign.toLowerCase());
-    blocklist.save();
-    ChatLib.chat(
-        new TextComponent(MSGPREFIX + "Added " + ign + " to the Party-Commands Blocklist! &a&l[UNDO]").setClick(
-            "run_command",
-            "/bac pcblocklist remove " + ign
-        )
-    );
-    return true;
-}
-
-export function removeFromPCBlocklist(ign) {
-    if (!blocklist.igns.includes(ign.toLowerCase()) || !ign) return false;
-    let index = blocklist.igns.indexOf(ign.toLowerCase());
-    blocklist.igns.splice(index, 1);
-    blocklist.save();
-    ChatLib.chat(
-        new TextComponent(MSGPREFIX + "Removed " + ign + " from the Party-Commands Blocklist! &a&l[REDO]").setClick(
-            "run_command",
-            "/bac pcblocklist add " + ign
-        )
-    );
-    return true;
-}
-
-export function getPCBlocklist() {
-    return blocklist.igns;
 }

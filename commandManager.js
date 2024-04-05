@@ -1,9 +1,9 @@
 import Config from "./config";
 import { downloadLatestVersion } from "./utils/update";
-import { MSGPREFIX } from "./utils/utils";
+import { MSGPREFIX, setLooking } from "./utils/utils";
 
 import { createGhostPick } from "./features/dungeons/ghostpick";
-import { addToPCBlocklist, removeFromPCBlocklist, getPCBlocklist } from "./features/chat/partyCommands";
+import { addToPCBlocklist, removeFromPCBlocklist, getPCBlocklist } from "./utils/partyCommandsBlocklist";
 
 let isUpdating = false;
 
@@ -58,6 +58,9 @@ register("command", (...args) => {
                     downloadLatestVersion();
                 }
                 break;
+            case "look":
+                setLooking(args[1], args[2], true);
+                break;
             default:
                 //case "help":
                 let messages = [
@@ -68,6 +71,7 @@ register("command", (...args) => {
                     `&7/bacon &dgpick <slot> <tool> <level> &7- &8&oCreates a Ghost pickaxe in the specified slot.`,
                     `&7/bacon &dpcblocklist [add/remove/list] &7- &8&oAdd/Remove/List Players from the Party-Commands Blocklist.`,
                     `&7/bacon &dupdate &7- &8&o(Re)install the newest version`,
+                    `&7/bacon &dlook <yaw> <pitch> &7- &8&oLook in the direction (uses current Angle if left empty)`,
                     `\n\n`,
                     //`&c&l${ChatLib.getChatBreak(" ")}`
                 ];
@@ -75,6 +79,6 @@ register("command", (...args) => {
                 break;
         }
 })
-    .setTabCompletions("gpick", "settings", "pcblocklist", "help")
+    .setTabCompletions("gpick", "settings", "pcblocklist", "update", "look", "help")
     .setName("bac", true)
     .setAliases("bacon");

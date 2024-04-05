@@ -1,5 +1,5 @@
 import Config from "../../config";
-import { registerWhen, MSGPREFIX } from "../../utils/utils";
+import { registerWhen } from "../../utils/utils";
 
 let blocks = [];
 
