@@ -59,7 +59,8 @@ register("command", (...args) => {
                 }
                 break;
             case "look":
-                setLooking(args[1], args[2], true);
+                ChatLib.chat(MSGPREFIX + "This command is currently disabled, you know why :(!");
+                //setLooking(args[1], args[2], true);
                 break;
             default:
                 //case "help":
