@@ -19,7 +19,7 @@ registerWhen(
                         let block = World.getBlockAt(x, y, z);
                         if (block?.type?.getID() === 10 || block?.type?.getID() === 11) {
                             chests.push([block.getState(), x, y, z]);
-                            setBlock(x, y, z, "ender_chest");
+                            setBlock(x, y, z, "rail");
                             break;
                         }
                     }
