@@ -25,6 +25,12 @@ import {
 class Config {
     constructor() {
         this.initialize(this)
+
+        this.addDependency("Force Superbounce", "Automatic Lava Superbounce");
+        this.addDependency("Triggerbot Shift Behaviour", "Enable Chest & Lever Triggerbot");
+        this.addDependency("Autostonk/Slice Blocks when Triggerbot could fire", "Enable Chest & Lever Triggerbot");
+        this.addDependency("Pest Box Color", "Highlight pests");
+        this.addDependency("Harp Solver Delay", "Enable Harp Solver")
     }
 
     
@@ -104,6 +110,14 @@ class Config {
         subcategory: "F7"
     })
     enableAutoSuperbounce = false
+
+    @SwitchProperty({
+        name: "Force Superbounce",
+        description: "Will always work in F7",
+        category: "Dungeons",
+        subcategory: "F7"
+    })
+    superbounceForceToggle = false
 
 
 

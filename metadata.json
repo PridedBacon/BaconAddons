@@ -5,7 +5,7 @@
     "entry": "index.js",
     "requires": ["Vigilance", "RenderLibV2", "RenderLib", "PogData", "BloomCore", "BeaconBeam", "requestV2"],
     "helpMessage": "&d[Bacon] &eRun &8`/bac`&e or &8`/bac help`&e to get started!",
-    "version": "1.2.7",
+    "version": "1.2.8",
     "$changelog": {
         "1.0": ["Initial Release!"],
         "1.1": ["Many new features!"],
@@ -25,6 +25,7 @@
             "tl;dr Fixes, AutoTPGarden, Dragon Features"
         ],
         "1.2.6": ["Security Fix"],
-		"1.2.7": ["Enderchest -> Rails for Lava Superbounce (looks more legit)"]
+        "1.2.7": ["Enderchest -> Rails for Lava Superbounce (looks more legit)"],
+        "1.2.8": ["Force Superbounce in F7", "Settings Dependency"]
     }
 }

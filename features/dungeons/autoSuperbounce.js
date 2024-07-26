@@ -1,5 +1,6 @@
 import Config from "../../config";
 import { registerWhen, MSGPREFIX } from "../../utils/utils";
+import { removeUnicode } from "../../../BloomCore/utils/Utils";
 
 const JavaBlockPos = Java.type("net.minecraft.util.BlockPos");
 const setBlockState = (x, y, z, state) => World.getWorld().func_175656_a(new JavaBlockPos(x, y, z), state);
@@ -33,7 +34,11 @@ registerWhen(
             }
         }
     }),
-    () => Config.enableAutoSuperbounce && getCurrentRoomId() === "f7",
+    () =>
+        Config.enableAutoSuperbounce &&
+        (getCurrentRoomId() === "f7" ||
+            (Config.superbounceForceToggle &&
+                Scoreboard.getLines().some((l) => removeUnicode(l.getName()).trim() === "7 cThe Cataccombs 7(F7)"))),
     "Dungeon"
 );
 
