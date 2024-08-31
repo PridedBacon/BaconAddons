@@ -17,14 +17,15 @@ import "./features/misc/dragonFeatures.js";
 import "./features/dungeons/autoStair.js";
 import "./features/garden/autoGardenTP.js";
 import "./features/misc/trapperHelper.js";
+import "./features/misc/noNausea.js";
 
 ChatLib.chat(MSGPREFIX + "Loaded!");
 
 let hasShownUpdateMsg = false;
 const updatechecker = register("tick", () => {
-  if (!hasShownUpdateMsg) {
-    hasShownUpdateMsg = true;
-    updatechecker.unregister();
-    setTimeout(checkForUpdates, 1500);
-  }
+    if (!hasShownUpdateMsg) {
+        hasShownUpdateMsg = true;
+        updatechecker.unregister();
+        setTimeout(checkForUpdates, 1500);
+    }
 });

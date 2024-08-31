@@ -230,12 +230,20 @@ class Config {
         name: "Disable Blindness",
         description: "Disables the Blindness Fog\n&cNOTE: You need to disable Fog &e(Options > Video Settings > Details > Fog) &cusing Optifine for this to work!",
         category: "Misc",
-        subcategory: "ASM"
+        subcategory: "Camera"
     })
     ASMdisableBlindness = false
 
     @SwitchProperty({
-        name: "Enable Trapper Helper",
+        name: "Disable Nausea",
+        description: "Removes Nausea from the Player",
+        category: "Misc",
+        subcategory: "Camera"
+    })
+    disableNausea = false
+
+    @SwitchProperty({
+        name: "Enable Trapper ESP",
         description: "Tries to display ESP on the Mob",
         category: "Misc",
         subcategory: "Trapper"
