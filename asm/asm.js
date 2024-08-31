@@ -23,14 +23,53 @@ export default (ASM) => {
         })
         .instructions(($) => {
             $.array(0, OBJECT, ($) => {}).invokeJS("toggleBlindness");
-            $.checkcast(BOOLEAN).invokeVirtual(
-                BOOLEAN,
-                "booleanValue",
-                desc("Z")
-            );
-            $.ifClause([JumpCondition.FALSE], ($) => {
-                $.methodReturn();
+            const result = $.astore();
+            $.aload(result.index);
+            $.instanceof("org/mozilla/javascript/Undefined");
+
+            $.ifClause([JumpCondition.TRUE], ($) => {
+                $.aload(result.index);
+                $.checkcast(BOOLEAN);
+                $.invokeVirtual(BOOLEAN, "booleanValue", desc("Z"));
+                $.ifClause([JumpCondition.FALSE], ($) => {
+                    $.methodReturn();
+                });
             });
         })
         .execute();
+
+    /*
+    ASM.injectBuilder(
+        "net/minecraft/client/renderer/EntityRenderer",
+        "setupCameraTransform",
+        "(FI)V",
+        ASM.At(
+            ASM.At.INVOKE(
+                "net/minecraft/entity/EntityLivingBase",
+                "isPotionActive",
+                "(Lnet/minecraft/potion/Potion;)Z"
+            )
+        )
+    )
+        .methodMaps({
+            func_78479_a: "setupCameraTransform",
+            func_70644_a: "isPotionActive",
+        })
+        .instructions(($) => {
+            $.array(0, OBJECT, ($) => {}).invokeJS("toggleNausea");
+            const result = $.astore();
+            $.aload(result.index);
+            $.instanceof("org/mozilla/javascript/Undefined");
+
+            $.ifClause([JumpCondition.TRUE], ($) => {
+                $.aload(result.index);
+                $.checkcast(BOOLEAN);
+                $.invokeVirtual(BOOLEAN, "booleanValue", desc("Z"));
+                $.ifClause([JumpCondition.FALSE], ($) => {
+                    $.methodReturn();
+                });
+            });
+        })
+        .execute();
+        */
 };
