@@ -226,6 +226,22 @@ class Config {
 
     //----------MISC----------
 
+    @SwitchProperty({
+        name: "Disable Blindness",
+        description: "Disables the Blindness Fog\n&cNOTE: You need to disable Fog &e(Options > Video Settings > Details > Fog) &cusing Optifine for this to work!",
+        category: "Misc",
+        subcategory: "ASM"
+    })
+    ASMdisableBlindness = false
+
+    @SwitchProperty({
+        name: "Enable Trapper Helper",
+        description: "Tries to display ESP on the Mob",
+        category: "Misc",
+        subcategory: "Trapper"
+    })
+    enableTrapperHelper = false
+
 
     @SwitchProperty({
         name: "Enable Dragon Features",
@@ -254,8 +270,6 @@ class Config {
         max: 5
     })
     clickDelayHarpSolver = 2
-
-
 }
 
 

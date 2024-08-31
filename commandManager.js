@@ -62,6 +62,27 @@ register("command", (...args) => {
                 ChatLib.chat(MSGPREFIX + "This command is currently disabled, you know why :(!");
                 //setLooking(args[1], args[2], true);
                 break;
+            case "setblock":
+                if (!args[1]) return ChatLib.chat(MSGPREFIX + "Specify a Block to place!");
+
+                const x = isNaN(parseInt(args[2])) ? ~~Player.getX() : parseInt(args[2]);
+                const y = isNaN(parseInt(args[3])) ? ~~Player.getY() : parseInt(args[3]);
+                const z = isNaN(parseInt(args[4])) ? ~~Player.getZ() : parseInt(args[4]);
+
+                try {
+                    World.getWorld().func_175656_a(
+                        new BlockPos(x, y, z).toMCBlock(),
+                        new BlockType(args[1]).getDefaultState()
+                    );
+                    ChatLib.chat(`${MSGPREFIX}Sucessfully placed &a${args[1]}&e at &a${x}, ${y}, ${z}&e!`);
+                } catch (e) {
+                    ChatLib.chat(
+                        `${MSGPREFIX}&eFailed to place ${x && y && z ? "&c" : "&a"}${args[1]}&e at ${
+                            x ? "&a" : "&c"
+                        }${x}&e, ${y ? "&a" : "&c"}${y}&e, ${z ? "&a" : "&c"}${z}&e!`
+                    );
+                }
+                break;
             default:
                 //case "help":
                 let messages = [
@@ -73,6 +94,7 @@ register("command", (...args) => {
                     `&7/bacon &dpcblocklist [add/remove/list] &7- &8&oAdd/Remove/List Players from the Party-Commands Blocklist.`,
                     `&7/bacon &dupdate &7- &8&o(Re)install the newest version`,
                     `&7/bacon &dlook <yaw> <pitch> &7- &8&oLook in the direction (uses current Angle if left empty)`,
+                    `&7/bacon &dsetblock (block) <x> <y> <z> &7- &8&oPlace a block at the current or specified coords`,
                     `\n\n`,
                     //`&c&l${ChatLib.getChatBreak(" ")}`
                 ];
@@ -80,6 +102,6 @@ register("command", (...args) => {
                 break;
         }
 })
-    .setTabCompletions("gpick", "settings", "pcblocklist", "update", "look", "help")
+    .setTabCompletions("gpick", "settings", "pcblocklist", "update", "look", "setblock", "help")
     .setName("bac", true)
     .setAliases("bacon");

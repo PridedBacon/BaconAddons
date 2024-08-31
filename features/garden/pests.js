@@ -27,12 +27,12 @@ const isPest = (entity) => {
 };
 
 registerWhen(
-    register("tick", () => {
+    register("step", () => {
         pests = [];
         World.getAllEntitiesOfType(EntityArmorStand.class).forEach((entity) => {
             if (isPest(entity)) pests.push(entity);
         });
-    }),
+    }).setFps(8),
     () => Config.highlightPests,
     "Garden"
 );
@@ -46,8 +46,24 @@ registerWhen(
                 2,
                 2,
                 2,
-                ...Object.values(RenderLibV2.getColor(Config.colorPestHighlight)),
+                ...Object.values(
+                    RenderLibV2.getColor(Config.colorPestHighlight)
+                ),
                 true
+            );
+
+            RenderLibV2.drawLine(
+                Player.getRenderX(),
+                Player.getRenderY() + Player.getPlayer().func_70047_e(),
+                Player.getRenderZ(),
+                e.getRenderX(),
+                e.getRenderY() + 2,
+                e.getRenderZ(),
+                ...Object.values(
+                    RenderLibV2.getColor(Config.colorPestHighlight)
+                ),
+                true,
+                4
             );
         });
     }),
