@@ -27,12 +27,14 @@ register("step", () => {
         let [trigger, func, area] = checkingTriggers[i];
         let areaResult = area;
 
-        if (typeof area === "object") areaResult = area.some((entry) => entry === Skyblock.area || entry === "All");
+        if (typeof area === "object")
+            areaResult = area.some((entry) => entry === Skyblock.area || entry === "All");
         else areaResult = area === Skyblock.area || area === "All";
 
         let triggerIterable = trigger?.[Symbol.iterator];
 
-        if (func() && areaResult) triggerIterable ? trigger.forEach((t) => t.register()) : trigger.register();
+        if (func() && areaResult)
+            triggerIterable ? trigger.forEach((t) => t.register()) : trigger.register();
         else triggerIterable ? trigger.forEach((t) => t.unregister()) : trigger.unregister();
     }
 }).setFps(1);
@@ -66,7 +68,9 @@ export const traverseVoxelsUntilFunc = (
     const step = direction.map((a) => Math.sign(a));
     const thing = direction.map((a) => 1 / a);
     const tDelta = thing.map((v, i) => Math.min(v * step[i], 1));
-    const tMax = thing.map((v, i) => Math.abs((Math.floor(start[i]) + Math.max(step[i], 0) - start[i]) * v));
+    const tMax = thing.map((v, i) =>
+        Math.abs((Math.floor(start[i]) + Math.max(step[i], 0) - start[i]) * v)
+    );
 
     let path = [];
     let iters = 0;
@@ -125,12 +129,16 @@ export class NonPooledThread {
 }
 
 const JSLoader = Java.type("com.chattriggers.ctjs.engine.langs.js.JSLoader");
-const UrlModuleSourceProvider = Java.type("org.mozilla.javascript.commonjs.module.provider.UrlModuleSourceProvider");
+const UrlModuleSourceProvider = Java.type(
+    "org.mozilla.javascript.commonjs.module.provider.UrlModuleSourceProvider"
+);
 const UrlModuleSourceProviderInstance = new UrlModuleSourceProvider(null, null);
 const StrongCachingModuleScriptProviderClass = Java.type(
     "org.mozilla.javascript.commonjs.module.provider.StrongCachingModuleScriptProvider"
 );
-let StrongCachingModuleScriptProvider = new StrongCachingModuleScriptProviderClass(UrlModuleSourceProviderInstance);
+let StrongCachingModuleScriptProvider = new StrongCachingModuleScriptProviderClass(
+    UrlModuleSourceProviderInstance
+);
 let CTRequire = new JSLoader.CTRequire(StrongCachingModuleScriptProvider);
 
 /**
@@ -139,7 +147,9 @@ let CTRequire = new JSLoader.CTRequire(StrongCachingModuleScriptProvider);
  * @returns {CTRequire}
  */
 export function RequireNoCache(place) {
-    StrongCachingModuleScriptProvider = new StrongCachingModuleScriptProviderClass(UrlModuleSourceProviderInstance);
+    StrongCachingModuleScriptProvider = new StrongCachingModuleScriptProviderClass(
+        UrlModuleSourceProviderInstance
+    );
     CTRequire = new JSLoader.CTRequire(StrongCachingModuleScriptProvider);
     return CTRequire("../" + place);
 }

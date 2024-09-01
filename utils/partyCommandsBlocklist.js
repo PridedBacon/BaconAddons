@@ -15,10 +15,9 @@ export function addToPCBlocklist(ign) {
     blocklist.igns.push(ign.toLowerCase());
     blocklist.save();
     ChatLib.chat(
-        new TextComponent(MSGPREFIX + "Added " + ign + " to the Party-Commands Blocklist! &a&l[UNDO]").setClick(
-            "run_command",
-            "/bac pcblocklist remove " + ign
-        )
+        new TextComponent(
+            MSGPREFIX + "Added " + ign + " to the Party-Commands Blocklist! &a&l[UNDO]"
+        ).setClick("run_command", "/bac pcblocklist remove " + ign)
     );
     return true;
 }
@@ -29,10 +28,9 @@ export function removeFromPCBlocklist(ign) {
     blocklist.igns.splice(index, 1);
     blocklist.save();
     ChatLib.chat(
-        new TextComponent(MSGPREFIX + "Removed " + ign + " from the Party-Commands Blocklist! &a&l[REDO]").setClick(
-            "run_command",
-            "/bac pcblocklist add " + ign
-        )
+        new TextComponent(
+            MSGPREFIX + "Removed " + ign + " from the Party-Commands Blocklist! &a&l[REDO]"
+        ).setClick("run_command", "/bac pcblocklist add " + ign)
     );
     return true;
 }

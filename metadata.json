@@ -22,12 +22,8 @@
         "1.0": ["Initial Release!"],
         "1.1": ["Many new features!"],
         "1.2": ["Ingame Updater!"],
-        "1.2.1": [
-            "Added Mimic (Trapped Chest) to Triggerbot, also test updater"
-        ],
-        "1.2.2": [
-            "Party Commands: Fix Freeze + Update Coords Format for Soopy Waypoints"
-        ],
+        "1.2.1": ["Added Mimic (Trapped Chest) to Triggerbot, also test updater"],
+        "1.2.2": ["Party Commands: Fix Freeze + Update Coords Format for Soopy Waypoints"],
         "1.2.3": [
             "Fixed Ingame Updater. Now shows the message on world load, not game start so you can actually see this message xD"
         ],
@@ -41,9 +37,7 @@
             "tl;dr Fixes, AutoTPGarden, Dragon Features"
         ],
         "1.2.6": ["Security Fix"],
-        "1.2.7": [
-            "Enderchest -> Rails for Lava Superbounce (looks more legit)"
-        ],
+        "1.2.7": ["Enderchest -> Rails for Lava Superbounce (looks more legit)"],
         "1.2.8": ["Force Superbounce in F7", "Settings Dependency"],
         "1.2.9": ["Added Trevor the Trapper ESP"],
         "1.2.10": ["Added Tracers to Pest ESP"],

@@ -322,7 +322,16 @@ export function drawTab(tab) {
         if (key === "x" || key === "y" || key === "dropDown") return;
         rect(0, 0, 0, 150, tab.x, tab.y + buttonHeight * (i - 2), buttonWidth, buttonHeight);
         if (value.toggle) {
-            centeredString(fontmc, value.name, tab.x, tab.y + buttonHeight * (i - 2), 0, 200 / 255, 0, 1);
+            centeredString(
+                fontmc,
+                value.name,
+                tab.x,
+                tab.y + buttonHeight * (i - 2),
+                0,
+                200 / 255,
+                0,
+                1
+            );
         } else {
             centeredString(
                 fontmc,
@@ -353,7 +362,16 @@ export function drawDesc(mx, my, tab, index) {
     const key = tab[Object.keys(tab)[toShow + 1]];
     const description = key.description;
     if (tab.x < 500) {
-        rect(45, 45, 45, 255, tab.x + buttonWidth, my - 5, fontmc.getWidth(description) + 2, buttonHeight - 3);
+        rect(
+            45,
+            45,
+            45,
+            255,
+            tab.x + buttonWidth,
+            my - 5,
+            fontmc.getWidth(description) + 2,
+            buttonHeight - 3
+        );
         normalString(fontmc, description, tab.x + buttonWidth + 1, my - 6, 0.8, 0.8, 0.8, 1);
     } else {
         rect(
@@ -366,7 +384,16 @@ export function drawDesc(mx, my, tab, index) {
             fontmc.getWidth(description) + 4,
             buttonHeight - 3
         );
-        normalString(fontmc, description, tab.x - fontmc.getWidth(description) - 2, my - 6, 0.8, 0.8, 0.8, 1);
+        normalString(
+            fontmc,
+            description,
+            tab.x - fontmc.getWidth(description) - 2,
+            my - 6,
+            0.8,
+            0.8,
+            0.8,
+            1
+        );
     }
 }
 
@@ -425,7 +452,8 @@ function makeid() {
     var result = "";
     var characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789012345678901234567890123456789";
     var charactersLength = characters.length;
-    for (var i = 0; i < 8; i++) result += characters.charAt(Math.floor(Math.random() * charactersLength));
+    for (var i = 0; i < 8; i++)
+        result += characters.charAt(Math.floor(Math.random() * charactersLength));
     return result;
 }
 
@@ -440,7 +468,9 @@ export function sendPlacementPacket() {
     );
 }
 
-const C08PacketPlayerBlockPlacement = Java.type("net.minecraft.network.play.client.C08PacketPlayerBlockPlacement");
+const C08PacketPlayerBlockPlacement = Java.type(
+    "net.minecraft.network.play.client.C08PacketPlayerBlockPlacement"
+);
 const BP = Java.type("net.minecraft.util.BlockPos");
 
 /**
@@ -489,7 +519,10 @@ export function hitWithItemFromInv(itemIndex, blockpos) {
     if (itemIndex < 8) return;
     const currentHeldItemStack = Player.getHeldItem().itemStack;
     windowClick(itemIndex, 2);
-    Client.getMinecraft()?.field_71442_b?.func_180511_b(blockpos, Client.getMinecraft()?.field_71476_x?.field_178784_b);
+    Client.getMinecraft()?.field_71442_b?.func_180511_b(
+        blockpos,
+        Client.getMinecraft()?.field_71476_x?.field_178784_b
+    );
     windowClick(itemIndex, 2);
     Player.getPlayer().field_71071_by.field_70462_a[Player.getPlayer().field_71071_by.field_70461_c] =
         currentHeldItemStack;
@@ -584,7 +617,11 @@ export function isInterceptable3(start, goal, aabb) {
  * @returns {Boolean} If the player is looking at the Axis Aligned Bounding Box
  */
 export function isInterceptable(aabb, range) {
-    const position = new Vec3(player.field_70165_t, player.field_70163_u + fastEyeHeight(), player.field_70161_v);
+    const position = new Vec3(
+        player.field_70165_t,
+        player.field_70163_u + fastEyeHeight(),
+        player.field_70161_v
+    );
     const f2 = -MathHelper.func_76134_b(-player.field_70125_A * 0.017453292);
     const look = new Vec3(
         MathHelper.func_76126_a(-player.field_70177_z * 0.017453292 - 3.1415927) * f2,
@@ -593,7 +630,11 @@ export function isInterceptable(aabb, range) {
     );
     return isInterceptable3(
         position,
-        position.func_72441_c(look.field_72450_a * range, look.field_72448_b * range, look.field_72449_c * range),
+        position.func_72441_c(
+            look.field_72450_a * range,
+            look.field_72448_b * range,
+            look.field_72449_c * range
+        ),
         aabb
     );
 }

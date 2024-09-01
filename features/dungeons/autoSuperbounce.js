@@ -3,9 +3,13 @@ import { registerWhen, MSGPREFIX } from "../../utils/utils";
 import { removeUnicode } from "../../../BloomCore/utils/Utils";
 
 const JavaBlockPos = Java.type("net.minecraft.util.BlockPos");
-const setBlockState = (x, y, z, state) => World.getWorld().func_175656_a(new JavaBlockPos(x, y, z), state);
+const setBlockState = (x, y, z, state) =>
+    World.getWorld().func_175656_a(new JavaBlockPos(x, y, z), state);
 const setBlock = (x, y, z, block) =>
-    World.getWorld().func_175656_a(new BlockPos(x, y, z).toMCBlock(), new BlockType(block).getDefaultState());
+    World.getWorld().func_175656_a(
+        new BlockPos(x, y, z).toMCBlock(),
+        new BlockType(block).getDefaultState()
+    );
 
 let chests = [];
 registerWhen(
@@ -38,7 +42,9 @@ registerWhen(
         Config.enableAutoSuperbounce &&
         (getCurrentRoomId() === "f7" ||
             (Config.superbounceForceToggle &&
-                Scoreboard.getLines().some((l) => removeUnicode(l.getName()).trim() === "7 cThe Cataccombs 7(F7)"))),
+                Scoreboard.getLines().some(
+                    (l) => removeUnicode(l.getName()).trim() === "7 cThe Cataccombs 7(F7)"
+                ))),
     "Dungeon"
 );
 

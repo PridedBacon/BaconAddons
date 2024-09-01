@@ -2,7 +2,8 @@ import Config from "../../config";
 import { registerWhen } from "../../utils/utils";
 
 const JavaBlockPos = Java.type("net.minecraft.util.BlockPos");
-const setBlockState = (x, y, z, state) => World.getWorld().func_175656_a(new JavaBlockPos(x, y, z), state);
+const setBlockState = (x, y, z, state) =>
+    World.getWorld().func_175656_a(new JavaBlockPos(x, y, z), state);
 
 function checkStair(stairState, x, y, z) {
     let res = RegExp(/^minecraft:\w*\[facing=(\w*),half=bottom,shape=.*/).exec(stairState);
@@ -45,7 +46,12 @@ registerWhen(
 
         for (let i = 0; i < slabs.length; i++) {
             let [oldBlock, x, y, z] = slabs[i];
-            if (Math.abs(x - pX) > 3 || Math.abs(z - pZ) > 3 || y !== pY || !checkStair(oldBlock, x, y, z)) {
+            if (
+                Math.abs(x - pX) > 3 ||
+                Math.abs(z - pZ) > 3 ||
+                y !== pY ||
+                !checkStair(oldBlock, x, y, z)
+            ) {
                 setBlockState(x, y, z, oldBlock);
                 slabs.splice(i, 1);
             }

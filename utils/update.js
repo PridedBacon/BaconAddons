@@ -2,14 +2,10 @@ import request from "../../requestV2/index.js";
 import { MSGPREFIX } from "./utils.js";
 
 export function checkForUpdates() {
-    request(
-        "https://raw.githubusercontent.com/PridedBacon/BaconAddons/main/metadata.json"
-    )
+    request("https://raw.githubusercontent.com/PridedBacon/BaconAddons/main/metadata.json")
         .then((rawdata) => {
             data = JSON.parse(rawdata);
-            let metadata = JSON.parse(
-                FileLib.read("BaconAddons", "metadata.json")
-            );
+            let metadata = JSON.parse(FileLib.read("BaconAddons", "metadata.json"));
 
             if (metadata.version == data.version) return;
 
@@ -17,44 +13,30 @@ export function checkForUpdates() {
 
             Object.entries(data.$changelog).forEach(([verTag, changelog]) => {
                 if (isNewVersion(metadata.version, verTag))
-                    changelogFormatted.push(
-                        `&e${verTag}:\n&3- ` + changelog.join("\n&r&3- ")
-                    );
+                    changelogFormatted.push(`&e${verTag}:\n&3- ` + changelog.join("\n&r&3- "));
             });
             new Message(
                 "\n",
                 MSGPREFIX + `New update avaliable! (Version ${data.version})\n`,
                 new TextComponent(MSGPREFIX + "&a&l[CLICK TO DOWNLOAD]")
                     .setClick("run_command", "/bac update")
-                    .setHover(
-                        "show_text",
-                        `&aClick to automatically update to Version ${data.version}`
-                    ),
+                    .setHover("show_text", `&aClick to automatically update to Version ${data.version}`),
                 "  ",
-                new TextComponent(
-                    `&b&l[CHANGELOG FOR ${data.version}]`
-                ).setHover(
+                new TextComponent(`&b&l[CHANGELOG FOR ${data.version}]`).setHover(
                     "show_text",
                     "&6&lChangelog:\n\n" + changelogFormatted.join("\n")
                 ),
                 "\n"
             ).chat();
         })
-        .catch((error) =>
-            ChatLib.chat(
-                MSGPREFIX + "Error getting update Information: " + error
-            )
-        );
+        .catch((error) => ChatLib.chat(MSGPREFIX + "Error getting update Information: " + error));
 }
 
 function isNewVersion(currVersion, checkVersion) {
     const partsCurrVersion = currVersion.split(".").map(Number);
     const partsCheckVersion = checkVersion.split(".").map(Number);
 
-    const maxLength = Math.max(
-        partsCurrVersion.length,
-        partsCheckVersion.length
-    );
+    const maxLength = Math.max(partsCurrVersion.length, partsCheckVersion.length);
 
     for (let i = 0; i < maxLength; i++) {
         let old = partsCurrVersion[i] || 0;
@@ -74,9 +56,7 @@ const Byte = Java.type("java.lang.Byte");
 
 export function downloadLatestVersion() {
     new Thread(() => {
-        new File(
-            "./config/ChatTriggers/modules/BaconAddonsTempDownload"
-        ).mkdir();
+        new File("./config/ChatTriggers/modules/BaconAddonsTempDownload").mkdir();
         ChatLib.chat(MSGPREFIX + "Downloading latest files...");
         urlToFile(
             "https://github.com/PridedBacon/BaconAddons/archive/refs/heads/main.zip",
@@ -90,17 +70,13 @@ export function downloadLatestVersion() {
             "./config/ChatTriggers/modules/BaconAddonsTempDownload/BaconAddons/"
         );
         ChatLib.chat(MSGPREFIX + "Finishing up!");
-        FileLib.deleteDirectory(
-            new File("./config/ChatTriggers/modules/BaconAddons")
-        );
+        FileLib.deleteDirectory(new File("./config/ChatTriggers/modules/BaconAddons"));
 
         new File(
             "./config/ChatTriggers/modules/BaconAddonsTempDownload/BaconAddons/BaconAddons-main"
         ).renameTo(new File("./config/ChatTriggers/modules/BaconAddons"));
 
-        FileLib.deleteDirectory(
-            new File("./config/ChatTriggers/modules/BaconAddonsTempDownload")
-        );
+        FileLib.deleteDirectory(new File("./config/ChatTriggers/modules/BaconAddonsTempDownload"));
         ChatLib.chat(MSGPREFIX + "Done, Reloading!");
         ChatLib.command("ct load", true);
     }).start();
@@ -114,10 +90,7 @@ export function downloadLatestVersion() {
         connection.setReadTimeout(readtimeout);
         const IS = connection.getInputStream();
         const FilePS = new PrintStream(destination);
-        let buf = new Packages.java.lang.reflect.Array.newInstance(
-            Byte.TYPE,
-            65536
-        );
+        let buf = new Packages.java.lang.reflect.Array.newInstance(Byte.TYPE, 65536);
         let len;
         while ((len = IS.read(buf)) > 0) {
             FilePS.write(buf, 0, len);

@@ -49,39 +49,21 @@ registerWhen(
             let mobClass = e.getClassName();
             if (!spawnedAnimalClasses.has(mobClass)) return false; // If it is same Mob
 
-            if (
-                mobClass === "EntityArmorStand" &&
-                e.getName().includes(mobRarity)
-            ) {
+            if (mobClass === "EntityArmorStand" && e.getName().includes(mobRarity)) {
                 armorStands.push(e);
                 return false; // If it is Armor Stand -> Seperate Renderer
             }
 
-            if (
-                minReqHeight[mobLocation] &&
-                minReqHeight[mobLocation] > e.getY()
-            )
-                return; // Filter for mobs below ...
+            if (minReqHeight[mobLocation] && minReqHeight[mobLocation] > e.getY()) return; // Filter for mobs below ...
 
-            if (
-                maxReqHeight[mobLocation] &&
-                maxReqHeight[mobLocation] < e.getY()
-            )
-                return; // Filter for mobs above     ...
+            if (maxReqHeight[mobLocation] && maxReqHeight[mobLocation] < e.getY()) return; // Filter for mobs above     ...
 
-            if (
-                !animalHealth.includes(
-                    new EntityLivingBase(e.entity).getMaxHP()
-                )
-            )
-                return false; //If it has same HP
+            if (!animalHealth.includes(new EntityLivingBase(e.entity).getMaxHP())) return false; //If it has same HP
 
             return true;
         });
 
-        animals = animals.filter(
-            (e) => !armorStands.some((a) => a.distanceTo(e) < 3)
-        ); //Don't display animal and armorStands at the same time
+        animals = animals.filter((e) => !armorStands.some((a) => a.distanceTo(e) < 3)); //Don't display animal and armorStands at the same time
     }).setFps(8),
     () => Config.enableTrapperHelper && isHunting,
     "The Farming Islands"
@@ -92,9 +74,7 @@ registerWhen(
         if (animals.length !== 0 || armorStands.length !== 0) {
             lastLocs = animals
                 .map((e) => [e.getX(), e.getY(), e.getZ()])
-                .concat(
-                    armorStands.map((e) => [e.getX(), e.getY() - 1, e.getZ()])
-                );
+                .concat(armorStands.map((e) => [e.getX(), e.getY() - 1, e.getZ()]));
 
             animals.forEach((e) => {
                 RenderLibV2.drawInnerEspBox(
@@ -157,18 +137,7 @@ registerWhen(
             });
         } else {
             lastLocs.forEach(([x, y, z]) => {
-                RenderLibV2.drawInnerEspBox(
-                    x,
-                    y,
-                    z,
-                    1,
-                    1,
-                    1,
-                    165 / 255,
-                    0,
-                    0.4,
-                    true
-                );
+                RenderLibV2.drawInnerEspBox(x, y, z, 1, 1, 1, 165 / 255, 0, 0.4, true);
 
                 RenderLibV2.drawLine(
                     Player.getRenderX(),
@@ -195,9 +164,7 @@ registerWhen(
 registerWhen(
     register("chat", (event) => {
         const msg = event.message;
-        const acceptmsg = msg
-            .func_150253_a()
-            .find((m) => m.text === "§a§l[YES]");
+        const acceptmsg = msg.func_150253_a().find((m) => m.text === "§a§l[YES]");
         const acceptCommand = new TextComponent(acceptmsg).getClickValue();
         ChatLib.chat(MSGPREFIX + "Auto accepting Task!");
         ChatLib.say(acceptCommand);
@@ -207,9 +174,7 @@ registerWhen(
         animals = [];
         armorStands = [];
         spawnedMobs = [];
-    }).setCriteria(
-        "\nAccept the trapper's task to hunt the animal?\nClick an option: [YES] - [NO]"
-    ),
+    }).setCriteria("\nAccept the trapper's task to hunt the animal?\nClick an option: [YES] - [NO]"),
     () => Config.enableTrapperHelper,
     "The Farming Islands"
 );
@@ -232,12 +197,9 @@ registerWhen(
 
 registerWhen(
     register("chat", (rarity, loc) => {
-        mobRarity =
-            rarity.charAt(0).toUpperCase() + rarity.slice(1).toLowerCase();
+        mobRarity = rarity.charAt(0).toUpperCase() + rarity.slice(1).toLowerCase();
         mobLocation = loc.toLowerCase();
-    }).setChatCriteria(
-        /\[NPC\] Trevor: You can find your (\w+) animal near the ([\w ]+)\./
-    ),
+    }).setChatCriteria(/\[NPC\] Trevor: You can find your (\w+) animal near the ([\w ]+)\./),
     () => Config.enableTrapperHelper,
     "The Farming Islands"
 );

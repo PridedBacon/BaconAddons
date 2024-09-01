@@ -5,7 +5,12 @@ let fileNotFound = false;
 let blocks;
 
 if (!FileLib.exists("BaconAddons", "./data/F7preDeviceStonk.json")) {
-    ChatLib.chat(MSGPREFIX + "Could not find F7 Pre-Device Data!\n" + MSGPREFIX + "Force-Disabling this Feature...");
+    ChatLib.chat(
+        MSGPREFIX +
+            "Could not find F7 Pre-Device Data!\n" +
+            MSGPREFIX +
+            "Force-Disabling this Feature..."
+    );
     fileNotFound = true;
 } else {
     blocks = JSON.parse(FileLib.read("BaconAddons", "./data/F7preDeviceStonk.json"));

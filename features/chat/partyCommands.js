@@ -20,10 +20,9 @@ registerWhen(
     register("chat", (player, command, arg) => {
         if (isBlocked(player.toLowerCase())) {
             ChatLib.chat(
-                new TextComponent(MSGPREFIX + "Blocked Party-Command from &b" + player + "&e! &a&l[ALLOW]").setClick(
-                    "run_command",
-                    "/bac pcblocklist remove " + player
-                )
+                new TextComponent(
+                    MSGPREFIX + "Blocked Party-Command from &b" + player + "&e! &a&l[ALLOW]"
+                ).setClick("run_command", "/bac pcblocklist remove " + player)
             );
             return;
         }
@@ -39,7 +38,11 @@ registerWhen(
                     ChatLib.command(
                         `pc x: ${~~Player.getX()}, y: ${~~Player.getY()}, z: ${~~Player.getZ()} | Current area: ${
                             Skyblock.area ? Skyblock.area : "Lobby/Unkown"
-                        }${Skyblock.subArea && Skyblock.area != Skyblock.subArea ? " (" + Skyblock.subArea + ")" : []}`
+                        }${
+                            Skyblock.subArea && Skyblock.area != Skyblock.subArea
+                                ? " (" + Skyblock.subArea + ")"
+                                : []
+                        }`
                     );
                     break;
                 case "allinvite":
@@ -51,7 +54,12 @@ registerWhen(
                     sendCommandIfLeaderElseNotify("p invite " + arg, "invited " + arg, player + "!");
                     break;
                 case "ptme":
-                    sendCommandIfLeaderElseNotify("p transfer " + player, "transfered the Party to him!", player, true);
+                    sendCommandIfLeaderElseNotify(
+                        "p transfer " + player,
+                        "transfered the Party to him!",
+                        player,
+                        true
+                    );
                     break;
                 case "pt":
                 case "tp":
@@ -63,7 +71,12 @@ registerWhen(
                     );
                     break;
                 case "kick":
-                    sendCommandIfLeaderElseNotify("p kick " + arg, `kicked ${arg} from the Party!`, player, true);
+                    sendCommandIfLeaderElseNotify(
+                        "p kick " + arg,
+                        `kicked ${arg} from the Party!`,
+                        player,
+                        true
+                    );
                     break;
 
                 //hypixel broke this
@@ -109,10 +122,9 @@ function sendCommandIfLeaderElseNotify(command, successMSG, player, CheckTrusted
     if (Party?.leader == Player.getName()) {
         ChatLib.command(command);
         ChatLib.chat(
-            new TextComponent(MSGPREFIX + "&b" + player + " &e" + successMSG + " &4&l[BLOCK PLAYER]").setClick(
-                "run_command",
-                "/bac pcblocklist add " + player
-            )
+            new TextComponent(
+                MSGPREFIX + "&b" + player + " &e" + successMSG + " &4&l[BLOCK PLAYER]"
+            ).setClick("run_command", "/bac pcblocklist add " + player)
         );
     } else {
         ChatLib.chat(MSGPREFIX + "Not Leader!");

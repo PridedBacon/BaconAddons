@@ -10,14 +10,11 @@ export default new (class MayorUtils {
         if (!(this.lastDerpyCheck + 3600 * 1000 < Date.now()))
             return new Promise((resolve) => resolve(this.lastDerpyResult));
 
-        return request(
-            "https://api.hypixel.net/v2/resources/skyblock/election"
-        ).then((rawdata) => {
+        return request("https://api.hypixel.net/v2/resources/skyblock/election").then((rawdata) => {
             const data = JSON.parse(rawdata);
 
             this.lastDerpyCheck = Date.now();
-            this.lastDerpyResult =
-                data["success"] && data["mayor"]["key"] === "derp";
+            this.lastDerpyResult = data["success"] && data["mayor"]["key"] === "derp";
 
             return this.lastDerpyResult;
         });

@@ -51,7 +51,11 @@ export const createGhostPick = (
             playerLookingAt &&
             playerLookingAt.type.mcBlock.func_176195_g(
                 World.getWorld(),
-                new BlockPos(playerLookingAt.getX(), playerLookingAt.getY(), playerLookingAt.getZ()).toMCBlock()
+                new BlockPos(
+                    playerLookingAt.getX(),
+                    playerLookingAt.getY(),
+                    playerLookingAt.getZ()
+                ).toMCBlock()
             ) !== 0
         ) {
             const ItemEffi = (item) =>
@@ -73,7 +77,9 @@ export const createGhostPick = (
         .getInventory()
         .func_70299_a(num - 1, nbt);
 
-    ChatLib.chat(`${MSGPREFIX}Created Ghost &a${toolTranslation[tool]}&6 in slot &a${num}&6! (&aEffi ${lvl}&6)`);
+    ChatLib.chat(
+        `${MSGPREFIX}Created Ghost &a${toolTranslation[tool]}&6 in slot &a${num}&6! (&aEffi ${lvl}&6)`
+    );
 };
 
 const key = new KeyBind("Create Ghost Pickaxe", Keyboard.KEY_NONE, "§dBaconAddons");

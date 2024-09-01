@@ -79,7 +79,11 @@ const registerForge = (e, cb, priority = EventPriority.NORMAL) => {
         const mv = cw.visitMethod(Opcodes.ACC_PUBLIC, "on", "(" + L(event) + ")V", null, null);
         {
             const av = mv.visitAnnotation(L(subscribeEvent), true);
-            av.visitEnum("priority", "Lnet/minecraftforge/fml/common/eventhandler/EventPriority;", priority);
+            av.visitEnum(
+                "priority",
+                "Lnet/minecraftforge/fml/common/eventhandler/EventPriority;",
+                priority
+            );
             av.visitEnd();
         }
         mv.visitCode();

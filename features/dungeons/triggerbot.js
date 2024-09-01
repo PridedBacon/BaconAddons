@@ -4,7 +4,12 @@ import { rightClick } from "../../utils/OdinUtils";
 import RenderLibV2 from "../../../RenderLibV2";
 import { MCBlockPos } from "../../../BloomCore/utils/Utils";
 
-const clickableBlocks = new Set(["minecraft:chest", "minecraft:lever", "minecraft:skull", "minecraft:trapped_chest"]);
+const clickableBlocks = new Set([
+    "minecraft:chest",
+    "minecraft:lever",
+    "minecraft:skull",
+    "minecraft:trapped_chest",
+]);
 const noGuiBlocks = new Set(["minecraft:lever", "minecraft:skull"]);
 const validSkullIDs = new Set([
     "26bb1a8d-7c66-31c6-82d5-a9c04c94fb02", // Wither Essence
@@ -22,7 +27,8 @@ function checkSneakRules() {
             return true;
         case 1:
             let noGuiBlock =
-                Player.lookingAt() instanceof Block && noGuiBlocks.has(Player.lookingAt().type.getRegistryName());
+                Player.lookingAt() instanceof Block &&
+                noGuiBlocks.has(Player.lookingAt().type.getRegistryName());
             let validBow =
                 Player.getHeldItem()?.getRegistryName() === "minecraft:bow" &&
                 Player.getInventory()?.getStackInSlot(8)?.getRegistryName() !== "minecraft:arrow";
@@ -86,7 +92,9 @@ registerWhen(
                 });
                 highlightedBlock = [
                     hit.blockpos,
-                    getBlockBounds(World.getBlockAt(new BlockPos(hit.blockpos[0], hit.blockpos[1], hit.blockpos[2]))),
+                    getBlockBounds(
+                        World.getBlockAt(new BlockPos(hit.blockpos[0], hit.blockpos[1], hit.blockpos[2]))
+                    ),
                 ];
             } else {
                 highlightedBlock = [];
@@ -95,7 +103,8 @@ registerWhen(
             highlightedBlock = [];
         }
         let block =
-            Player.lookingAt() instanceof Block && clickableBlocks.has(Player.lookingAt().type.getRegistryName())
+            Player.lookingAt() instanceof Block &&
+            clickableBlocks.has(Player.lookingAt().type.getRegistryName())
                 ? Player.lookingAt().pos
                 : null;
         if (!block) return;
@@ -107,7 +116,13 @@ registerWhen(
             isValidRoom()
         ) {
             if (Player.lookingAt().type.getRegistryName() === "minecraft:skull") {
-                if (!isValidSkull(Player.lookingAt().getX(), Player.lookingAt().getY(), Player.lookingAt().getZ()))
+                if (
+                    !isValidSkull(
+                        Player.lookingAt().getX(),
+                        Player.lookingAt().getY(),
+                        Player.lookingAt().getZ()
+                    )
+                )
                     return;
             } else if (Player.lookingAt().type.getRegistryName() === "minecraft:lever") {
                 if (

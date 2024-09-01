@@ -19,13 +19,42 @@ registerWhen(
                 entity.getName() === "Dinnerbone" &&
                 entity.isInvisible()
             ) {
-                currentHighlights.push([entity.getX(), entity.getY(), entity.getZ(), 1, 3, 1, 0, 0, 1, 1, false, 3]);
+                currentHighlights.push([
+                    entity.getX(),
+                    entity.getY(),
+                    entity.getZ(),
+                    1,
+                    3,
+                    1,
+                    0,
+                    0,
+                    1,
+                    1,
+                    false,
+                    3,
+                ]);
             } else if (
                 entity.getEntity() instanceof Java.type("net.minecraft.entity.player.EntityPlayer") &&
                 entity.getEntity()?.field_71071_by?.func_70448_g()?.func_82833_r() === "§9Silent Death"
             ) {
-                currentHighlights.push([entity.getX(), entity.getY(), entity.getZ(), 1, 2, 1, 1, 0, 0, 1, false, 3]);
-            } else if (entity.getEntity() instanceof EntityArmorStand && !entity.getEntity().func_181026_s()) {
+                currentHighlights.push([
+                    entity.getX(),
+                    entity.getY(),
+                    entity.getZ(),
+                    1,
+                    2,
+                    1,
+                    1,
+                    0,
+                    0,
+                    1,
+                    false,
+                    3,
+                ]);
+            } else if (
+                entity.getEntity() instanceof EntityArmorStand &&
+                !entity.getEntity().func_181026_s()
+            ) {
                 const skull = getEntitySkullTexture(entity);
                 if (skull === witherkey || skull === bloodkey)
                     currentHighlights.push([

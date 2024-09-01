@@ -46,9 +46,7 @@ registerWhen(
                 2,
                 2,
                 2,
-                ...Object.values(
-                    RenderLibV2.getColor(Config.colorPestHighlight)
-                ),
+                ...Object.values(RenderLibV2.getColor(Config.colorPestHighlight)),
                 true
             );
 
@@ -59,9 +57,7 @@ registerWhen(
                 e.getRenderX(),
                 e.getRenderY() + 2,
                 e.getRenderZ(),
-                ...Object.values(
-                    RenderLibV2.getColor(Config.colorPestHighlight)
-                ),
+                ...Object.values(RenderLibV2.getColor(Config.colorPestHighlight)),
                 true,
                 4
             );

@@ -3,11 +3,7 @@ import { downloadLatestVersion } from "./utils/update";
 import { MSGPREFIX, setLooking } from "./utils/utils";
 
 import { createGhostPick } from "./features/dungeons/ghostpick";
-import {
-    addToPCBlocklist,
-    removeFromPCBlocklist,
-    getPCBlocklist,
-} from "./utils/partyCommandsBlocklist";
+import { addToPCBlocklist, removeFromPCBlocklist, getPCBlocklist } from "./utils/partyCommandsBlocklist";
 
 let isUpdating = false;
 
@@ -29,31 +25,21 @@ register("command", (...args) => {
                     case "add":
                         if (!addToPCBlocklist(args[2]))
                             ChatLib.chat(
-                                MSGPREFIX +
-                                    "Failed to add &b" +
-                                    args[2] +
-                                    " &eto the Blocklist!"
+                                MSGPREFIX + "Failed to add &b" + args[2] + " &eto the Blocklist!"
                             );
                         break;
                     case "remove":
                         if (!removeFromPCBlocklist(args[2]))
                             ChatLib.chat(
-                                MSGPREFIX +
-                                    "Failed to remove &b" +
-                                    args[2] +
-                                    " &efrom the Blocklist!"
+                                MSGPREFIX + "Failed to remove &b" + args[2] + " &efrom the Blocklist!"
                             );
                         break;
                     case "list":
                         let names = getPCBlocklist();
-                        let message = new Message([
-                            MSGPREFIX + "Party-Commands Blocklisted Users:\n",
-                        ]);
+                        let message = new Message([MSGPREFIX + "Party-Commands Blocklisted Users:\n"]);
                         names.forEach((name) => {
                             message.addTextComponent(
-                                new TextComponent(
-                                    "&7- &b" + name + " &4&l[✖]\n"
-                                ).setClick(
+                                new TextComponent("&7- &b" + name + " &4&l[✖]\n").setClick(
                                     "run_command",
                                     "/bac pcblocklist remove " + name
                                 )
@@ -69,10 +55,7 @@ register("command", (...args) => {
                 }
                 break;
             case "update":
-                if (isUpdating)
-                    ChatLib.chat(
-                        MSGPREFIX + "BaconAddons is already updating!"
-                    );
+                if (isUpdating) ChatLib.chat(MSGPREFIX + "BaconAddons is already updating!");
                 else {
                     isUpdating = true;
                     ChatLib.chat(MSGPREFIX + "Updating...");
@@ -80,27 +63,15 @@ register("command", (...args) => {
                 }
                 break;
             case "look":
-                ChatLib.chat(
-                    MSGPREFIX +
-                        "This command is currently disabled, you know why :(!"
-                );
+                ChatLib.chat(MSGPREFIX + "This command is currently disabled, you know why :(!");
                 //setLooking(args[1], args[2], true);
                 break;
             case "setblock":
-                if (!args[1])
-                    return ChatLib.chat(
-                        MSGPREFIX + "Specify a Block to place!"
-                    );
+                if (!args[1]) return ChatLib.chat(MSGPREFIX + "Specify a Block to place!");
 
-                const x = isNaN(parseInt(args[2]))
-                    ? ~~Player.getX()
-                    : parseInt(args[2]);
-                const y = isNaN(parseInt(args[3]))
-                    ? ~~Player.getY()
-                    : parseInt(args[3]);
-                const z = isNaN(parseInt(args[4]))
-                    ? ~~Player.getZ()
-                    : parseInt(args[4]);
+                const x = isNaN(parseInt(args[2])) ? ~~Player.getX() : parseInt(args[2]);
+                const y = isNaN(parseInt(args[3])) ? ~~Player.getY() : parseInt(args[3]);
+                const z = isNaN(parseInt(args[4])) ? ~~Player.getZ() : parseInt(args[4]);
 
                 try {
                     World.getWorld().func_175656_a(
@@ -112,21 +83,15 @@ register("command", (...args) => {
                     );
                 } catch (e) {
                     ChatLib.chat(
-                        `${MSGPREFIX}&eFailed to place ${
-                            x && y && z ? "&c" : "&a"
-                        }${args[1]}&e at ${x ? "&a" : "&c"}${x}&e, ${
-                            y ? "&a" : "&c"
-                        }${y}&e, ${z ? "&a" : "&c"}${z}&e!`
+                        `${MSGPREFIX}&eFailed to place ${x && y && z ? "&c" : "&a"}${args[1]}&e at ${
+                            x ? "&a" : "&c"
+                        }${x}&e, ${y ? "&a" : "&c"}${y}&e, ${z ? "&a" : "&c"}${z}&e!`
                     );
                 }
                 break;
             case "version":
-                const metadata = JSON.parse(
-                    FileLib.read("BaconAddons", "metadata.json")
-                );
-                ChatLib.chat(
-                    MSGPREFIX + "Current Version: &a" + metadata.version
-                );
+                const metadata = JSON.parse(FileLib.read("BaconAddons", "metadata.json"));
+                ChatLib.chat(MSGPREFIX + "Current Version: &a" + metadata.version);
                 break;
             default:
                 //case "help":
