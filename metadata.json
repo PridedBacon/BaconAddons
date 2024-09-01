@@ -17,7 +17,7 @@
         "requestV2"
     ],
     "helpMessage": "&d[Bacon] &eRun &8`/bac`&e or &8`/bac help`&e to get started!",
-    "version": "1.2.12",
+    "version": "1.2.13",
     "$changelog": {
         "1.0": ["Initial Release!"],
         "1.1": ["Many new features!"],
@@ -48,6 +48,7 @@
         "1.2.9": ["Added Trevor the Trapper ESP"],
         "1.2.10": ["Added Tracers to Pest ESP"],
         "1.2.11": ["Added Option to disable Blindness"],
-        "1.2.12": ["Added Option to disable Nausea"]
+        "1.2.12": ["Added Option to disable Nausea"],
+        "1.2.13": ["Trapper Feature Improvements"]
     }
 }

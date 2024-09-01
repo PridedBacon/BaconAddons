@@ -27,6 +27,20 @@ const spawnedAnimalClasses = new Set([
     "EntityArmorStand",
 ]);
 
+const minReqHeight = {
+    "desert mountain": 110,
+    "desert settlement": 73,
+    oasis: 59,
+};
+
+const maxReqHeight = {
+    "desert settlement": 85,
+    "mushroom gorge": 100,
+    "glowing mushroom cave": 64,
+    "overgrown mushroom cave": 72,
+    oasis: 115,
+};
+
 registerWhen(
     register("step", () => {
         armorStands = [];
@@ -43,7 +57,23 @@ registerWhen(
                 return false; // If it is Armor Stand -> Seperate Renderer
             }
 
-            if (!animalHealth.includes(new EntityLivingBase(e.entity).getHP()))
+            if (
+                minReqHeight[mobLocation] &&
+                minReqHeight[mobLocation] > e.getY()
+            )
+                return; // Filter for mobs below ...
+
+            if (
+                maxReqHeight[mobLocation] &&
+                maxReqHeight[mobLocation] < e.getY()
+            )
+                return; // Filter for mobs above     ...
+
+            if (
+                !animalHealth.includes(
+                    new EntityLivingBase(e.entity).getMaxHP()
+                )
+            )
                 return false; //If it has same HP
 
             return true;
@@ -51,7 +81,7 @@ registerWhen(
 
         animals = animals.filter(
             (e) => !armorStands.some((a) => a.distanceTo(e) < 3)
-        );
+        ); //Don't display animal and armorStands at the same time
     }).setFps(8),
     () => Config.enableTrapperHelper && isHunting,
     "The Farming Islands"
@@ -204,7 +234,7 @@ registerWhen(
     register("chat", (rarity, loc) => {
         mobRarity =
             rarity.charAt(0).toUpperCase() + rarity.slice(1).toLowerCase();
-        mobLocation = loc;
+        mobLocation = loc.toLowerCase();
     }).setChatCriteria(
         /\[NPC\] Trevor: You can find your (\w+) animal near the ([\w ]+)\./
     ),

@@ -228,7 +228,7 @@ class Config {
 
     @SwitchProperty({
         name: "Disable Blindness",
-        description: "Disables the Blindness Fog\n&cNOTE: You need to disable Fog &e(Options > Video Settings > Details > Fog) &cusing Optifine for this to work!\n&cNOTE: You cant sprint as you still have the actual effect!",
+        description: "Disables the Blindness Fog\n&cNOTE: You need to disable Fog &e(Options > Video Settings > Details > Fog) &cusing Optifine for this to work!\n&cNOTE: You cant sprint as you still have the actual effect!\n&4WARNING: MAY CAUSE RARE GRAPHICAL GLITCHES!",
         category: "Misc",
         subcategory: "Camera"
     })
