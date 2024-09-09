@@ -15,9 +15,9 @@ import "./features/dungeons/autoSuperbounce.js";
 import "./features/dungeons/breakGhostblock.js";
 import "./features/misc/dragonFeatures.js";
 import "./features/dungeons/autoStair.js";
-import "./features/garden/autoGardenTP.js";
 import "./features/misc/trapperHelper.js";
 import "./features/misc/noNausea.js";
+import "./features/garden/farmingMacro.js";
 
 ChatLib.chat(MSGPREFIX + "Loaded!");
 

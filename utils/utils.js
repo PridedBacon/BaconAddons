@@ -217,3 +217,98 @@ export const setLooking = (paramYaw, paramPitch, feedback = true) => {
 
     setRotationFunction.invoke(Player.getPlayer(), new java.lang.Float(yaw), new java.lang.Float(pitch));
 };
+
+export function isPlayerBoundingBoxInAABB(aabb, playerPos = null) {
+    if (!aabb) return false;
+
+    if (!playerPos) playerPos = [Player.getX(), Player.getY(), Player.getZ()];
+
+    const [pX, pY, pZ] = playerPos;
+
+    const pMaxX = (pX + 0.3 - 0.00000001).toFixed(12);
+    const pMaxY = (pY + 1.8 - 0.00000001).toFixed(12);
+    const pMaxZ = (pZ + 0.3 - 0.00000001).toFixed(12);
+    const pMinX = (pX - 0.3 + 0.00000001).toFixed(12);
+    const pMinY = (pY + 0.00000001).toFixed(12);
+    const pMinZ = (pZ - 0.3 - 0.00000001).toFixed(12);
+
+    const maxX = aabb.field_72336_d;
+    const maxY = aabb.field_72337_e;
+    const maxZ = aabb.field_72334_f;
+    const minX = aabb.field_72340_a;
+    const minY = aabb.field_72338_b;
+    const minZ = aabb.field_72339_c;
+
+    if (pMaxX < minX || pMinX > maxX) return false;
+    if (pMaxY < minY || pMinY > maxY) return false;
+    if (pMaxZ < minZ || pMinZ > maxZ) return false;
+
+    return true;
+}
+
+export function isPlayerBoundingBoxInBlock(blockCoords = null, playerPos = null, ignoreIDs = null) {
+    if (!blockCoords) blockCoords = [Player.getX(), Player.getY(), Player.getZ()];
+    if (!playerPos) playerPos = [Player.getX(), Player.getY(), Player.getZ()];
+
+    const blockCoordsInt = blockCoords.map(Math.floor);
+
+    let block = World.getBlockAt(...blockCoordsInt);
+
+    if (ignoreIDs && ignoreIDs.includes(block.type.getID())) return false;
+
+    let aabb = block.type.mcBlock.func_180640_a(
+        World.getWorld(),
+        block.pos.toMCBlock(),
+        block.getState()
+    );
+    return isPlayerBoundingBoxInAABB(aabb, playerPos);
+}
+
+/**
+ * Displays a notification with a custom message and duration.
+ *
+ * @param {string} title - The title to display in the notification
+ * @param {string} message - The message to display in the notification.
+ * @param {number} [duration=3] - The duration in seconds for which the notification should be displayed.
+ *                                Defaults to 3 seconds.
+ * @param {function} [clickFunction=()=>{}] - The function to be executed when the notification is clicked.
+ *                                            Defaults to an empty function.
+ * @param {function} [closeFunction=()=>{}] - The function to be executed when the notification is closed.
+ *                                            Defaults to an empty function.
+ */
+export function essentialNotification(
+    title,
+    message,
+    duration = 3,
+    clickFunction = () => {},
+    closeFunction = () => {}
+) {
+    // Push the notification to the EssentialAPI notifications array
+    Java.type("gg.essential.api.EssentialAPI")
+        .getNotifications()
+        .push(title.toString(), message.toString(), duration, clickFunction, closeFunction);
+}
+
+export const addTwoArrays = (arr1, arr2) => {
+    const minLength = Math.min(arr1.length, arr2.length);
+
+    const newArray = [];
+
+    for (let i = 0; i < minLength; i++) {
+        newArray[i] = arr1[i] + arr2[i];
+    }
+    return newArray;
+};
+
+/**
+ * Merge two Objects e.g. deepMerge(defaultValues, input)
+ */
+export function deepMerge(target, source) {
+    for (let key in source) {
+        if (source[key] instanceof Object && key in target) {
+            Object.assign(source[key], deepMerge(target[key], source[key]));
+        }
+    }
+    Object.assign(target || {}, source);
+    return target;
+}

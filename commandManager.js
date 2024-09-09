@@ -4,6 +4,7 @@ import { MSGPREFIX, setLooking } from "./utils/utils";
 
 import { createGhostPick } from "./features/dungeons/ghostpick";
 import { addToPCBlocklist, removeFromPCBlocklist, getPCBlocklist } from "./utils/partyCommandsBlocklist";
+import { enableMacro, disableMacro } from "./features/garden/farmingMacro";
 
 let isUpdating = false;
 
@@ -93,6 +94,61 @@ register("command", (...args) => {
                 const metadata = JSON.parse(FileLib.read("BaconAddons", "metadata.json"));
                 ChatLib.chat(MSGPREFIX + "Current Version: &a" + metadata.version);
                 break;
+            case "macro":
+                if (!args[1] || args[1]?.toLowerCase() === "help") {
+                    ChatLib.chat(
+                        MSGPREFIX +
+                            "Use &8`/bac macro start <filename>`&e to start a farming Macro!\n" +
+                            MSGPREFIX +
+                            "Use &8`/bac macro stop`&e to stop a farming Macro!"
+                    );
+                } else if (args[1]?.toLowerCase() === "start") {
+                    const filenames = enableMacro(args[2] || " ");
+
+                    if (!filenames) {
+                        ChatLib.chat(
+                            new TextComponent(
+                                MSGPREFIX + `Started Macro: &a${args[2]}&e!  &c&l[DISABLE]`
+                            )
+                                .setClick("run_command", "/bac macro stop")
+                                .setHover("show_text", "&eClick to disable this Macro!")
+                        );
+                    } else {
+                        if (filenames.length === 0) {
+                            ChatLib.chat(
+                                MSGPREFIX +
+                                    "No Macros created! Create a Macro-JSON file in &8`.minecraft/config/ChatTriggers/modules/BaconAddons/data/farmingMacros/`&e!"
+                            );
+                        } else {
+                            const msg = new Message(
+                                MSGPREFIX +
+                                    `Macro file with name &a${
+                                        args[2] || "???"
+                                    }&e not found!\n&eAvailable (file)names:`
+                            );
+                            const validFilenames = filenames
+                                .map((e) =>
+                                    e
+                                        .replace(/\.json$/i, "")
+                                        .split("/")
+                                        .pop()
+                                )
+                                .map((e) =>
+                                    new TextComponent("&a" + e)
+                                        .setClick("run_command", "/bac macro start " + e)
+                                        .setHover("show_text", "&eClick to start: &a" + e)
+                                );
+
+                            for (let comp of validFilenames) {
+                                msg.addTextComponent("\n&d - ").addTextComponent(comp);
+                            }
+
+                            msg.chat();
+                        }
+                    }
+                } else disableMacro();
+
+                break;
             default:
                 //case "help":
                 let messages = [
@@ -102,10 +158,11 @@ register("command", (...args) => {
                     `&7/bacon &dconfig/cnf/settings &7- &8&oOpens the config menu.`,
                     `&7/bacon &dgpick <slot> <tool> <level> &7- &8&oCreates a Ghost pickaxe in the specified slot.`,
                     `&7/bacon &dpcblocklist [add/remove/list] &7- &8&oAdd/Remove/List Players from the Party-Commands Blocklist.`,
-                    `&7/bacon &dupdate &7- &8&o(Re)install the newest version`,
-                    `&7/bacon &dlook <yaw> <pitch> &7- &8&oLook in the direction (uses current Angle if left empty)`,
-                    `&7/bacon &dsetblock (block) <x> <y> <z> &7- &8&oPlace a block at the current or specified coords`,
-                    `&7/bacon &dversion &7- &8&oPrints the current version`,
+                    `&7/bacon &dupdate &7- &8&o(Re)install the newest version.`,
+                    `&7/bacon &dlook <yaw> <pitch> &7- &8&oLook in the direction (uses current Angle if left empty).`,
+                    `&7/bacon &dsetblock (block) <x> <y> <z> &7- &8&oPlace a block at the current or specified coords.`,
+                    `&7/bacon &dmacro [start/stop] (name) &7- &8&oStarts/Stops a farming macro.`,
+                    `&7/bacon &dversion &7- &8&oPrints the current version.`,
                     `\n\n`,
                     //`&c&l${ChatLib.getChatBreak(" ")}`
                 ];

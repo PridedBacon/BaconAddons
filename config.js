@@ -14,6 +14,10 @@ import {
     Color
 } from '../Vigilance/index';
 
+import { essentialNotification } from "./utils/utils";
+
+const Desktop = java.awt.Desktop;
+const File = java.io.File;
 
 
 @Vigilant("BaconAddons", "BaconAddons", {
@@ -223,9 +227,79 @@ class Config {
     enableAutoGardenTP = false
 
 
+    @ButtonProperty({
+        name: "Open Farming Macros Folder",
+        description: "Opens '.../BaconAddons/data/farmingMacros'",
+        category: "Garden",
+        subcategory: "Macro",
+        placeholder: "Open"
+    })
+    openMacrosFolder() {
+        Desktop.getDesktop().open(new File("config/ChatTriggers/modules/BaconAddons/data/farmingMacros"));
+    }
+
+    @ButtonProperty({
+        name: "Toggle 'Pause on lost Focus'",
+        description: "Toggle the 'Pause on lost Focus' Behaviour (or just press F3+P)",
+        category: "Garden",
+        subcategory: "Macro",
+        placeholder: "Toggle"
+    })
+    togglePauseOnLostFocus() {
+        Client.getSettings().getSettings().field_82881_y = !Client.getSettings().getSettings().field_82881_y
+        essentialNotification("BaconAddons", `${Client.getSettings().getSettings().field_82881_y ? "Enabled" : "Disabled"} Pause on lost Focus`)
+    }
+
+    @TextProperty({
+        name: "Discord ID",
+        description: "The discord ID to ping when a macro auto-disables.\nLeave empty to disable\n&cThis has to be the ID not username!",
+        category: "Garden",
+        subcategory: "Macro",
+    })
+    discordID = "";
+
+    @TextProperty({
+        name: "Discord Webhook URL",
+        description: "The discord Webhook URL to post to when a macro auto-disables.\nLeave empty to disable",
+        category: "Garden",
+        subcategory: "Macro",
+    })
+    discordWebhookURL = "";
+
+    @SliderProperty({
+        name: "Ping when too many Pests",
+        description: "How many pests are required to ping.\nSet to 0 to disable",
+        category: "Garden",
+        subcategory: "Macro",
+        min: 0,
+        max: 8
+    })
+    discordPingMinPests = 0;
+
+    @SliderProperty({
+        name: "Ping when too many Visitors",
+        description: "How many visitors are required to ping.\nSet to 0 to disable",
+        category: "Garden",
+        subcategory: "Macro",
+        min: 0,
+        max: 5
+    })
+    discordPingMinVisitors = 0;
+
+    @TextProperty({
+        name: "Ping when close to a contest",
+        description: "How many seconds before a contest start to ping.\nLeave empty to disable",
+        category: "Garden",
+        subcategory: "Macro",
+    })
+    discordPingTimeContest = "";
+
+
+
 
     //----------MISC----------
-
+    
+    /*
     @SwitchProperty({
         name: "Disable Blindness",
         description: "Disables the Blindness Fog\n&cNOTE: You need to disable Fog &e(Options > Video Settings > Details > Fog) &cusing Optifine for this to work!\n&cNOTE: You cant sprint as you still have the actual effect!\n&4WARNING: MAY CAUSE RARE GRAPHICAL GLITCHES!",
@@ -233,7 +307,8 @@ class Config {
         subcategory: "Camera"
     })
     ASMdisableBlindness = false
-
+    */
+    
     @SwitchProperty({
         name: "Disable Nausea",
         description: "Removes Nausea from the Player",
@@ -241,6 +316,7 @@ class Config {
         subcategory: "Camera"
     })
     disableNausea = false
+    
 
     @SwitchProperty({
         name: "Enable Trapper ESP",
@@ -277,7 +353,7 @@ class Config {
         min: 0,
         max: 5
     })
-    clickDelayHarpSolver = 2
+    clickDelayHarpSolver = 2;
 }
 
 
