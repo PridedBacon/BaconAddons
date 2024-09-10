@@ -6,6 +6,10 @@ import { createGhostPick } from "./features/dungeons/ghostpick";
 import { addToPCBlocklist, removeFromPCBlocklist, getPCBlocklist } from "./utils/partyCommandsBlocklist";
 import { enableMacro, disableMacro } from "./features/garden/farmingMacro";
 
+const Desktop = java.awt.Desktop;
+const File = java.io.File;
+const Files = java.nio.file.Files;
+
 let isUpdating = false;
 
 register("command", (...args) => {
@@ -100,7 +104,13 @@ register("command", (...args) => {
                         MSGPREFIX +
                             "Use &8`/bac macro start <filename>`&e to start a farming Macro!\n" +
                             MSGPREFIX +
-                            "Use &8`/bac macro stop`&e to stop a farming Macro!"
+                            "Use &8`/bac macro (stop)`&e to stop a farming Macro!\n" +
+                            MSGPREFIX +
+                            "Use &8`/bac macro [create/make] <filename>`&e to create a Macro!\n" +
+                            MSGPREFIX +
+                            "Use &8`/bac macro edit <filename>`&e to edit a Macro!\n" +
+                            MSGPREFIX +
+                            "Use &8`/bac macro [files/folder]`&e to open the Macro folder!"
                     );
                 } else if (args[1]?.toLowerCase() === "start") {
                     const macroArguments = args.slice(3).map((e) => e.toLowerCase());
@@ -166,6 +176,42 @@ register("command", (...args) => {
                             );
                             break;
                     }
+                } else if (args[1]?.toLowerCase() === "create" || args[1]?.toLowerCase() === "make") {
+                    if (!args[2]) {
+                        ChatLib.chat(MSGPREFIX + "Specify a filename!");
+                    } else if (FileLib.exists("BaconAddons", `data/farmingMacros/${args[2]}.json`)) {
+                        ChatLib.chat(MSGPREFIX + `A macro with the name &a${args[2]}&e already exists!`);
+                    } else {
+                        const newFile = new File(
+                            `config/ChatTriggers/modules/BaconAddons/data/farmingMacros/${args[2]}.json`
+                        );
+                        Files.copy(
+                            new File(
+                                "config/ChatTriggers/modules/BaconAddons/data/farmingMacros/TEMPLATE.json.disabled"
+                            ).toPath(),
+                            newFile.toPath()
+                        );
+                        Desktop.getDesktop().open(newFile);
+                        ChatLib.chat(MSGPREFIX + `Opening&a ${args[2]}.json&e!`);
+                    }
+                } else if (args[1]?.toLowerCase() === "edit") {
+                    if (!args[2]) {
+                        ChatLib.chat(MSGPREFIX + "Specify a filename!");
+                    } else if (!FileLib.exists("BaconAddons", `data/farmingMacros/${args[2]}.json`)) {
+                        ChatLib.chat(MSGPREFIX + `No macro with the name &6${args[2]} &efound!`);
+                    } else {
+                        Desktop.getDesktop().open(
+                            new File(
+                                `config/ChatTriggers/modules/BaconAddons/data/farmingMacros/${args[2]}.json`
+                            )
+                        );
+                        ChatLib.chat(MSGPREFIX + `Opening&a ${args[2]}.json&e!`);
+                    }
+                } else if (args[1]?.toLowerCase() === "folder" || args[1]?.toLowerCase() === "files") {
+                    Desktop.getDesktop().open(
+                        new File("config/ChatTriggers/modules/BaconAddons/data/farmingMacros")
+                    );
+                    ChatLib.chat(MSGPREFIX + "Opening Macro directory!");
                 } else disableMacro();
 
                 break;
