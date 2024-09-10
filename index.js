@@ -18,6 +18,7 @@ import "./features/dungeons/autoStair.js";
 import "./features/misc/trapperHelper.js";
 import "./features/misc/noNausea.js";
 import "./features/garden/farmingMacro.js";
+import "./features/chat/chatProtection.js";
 
 ChatLib.chat(MSGPREFIX + "Loaded!");
 

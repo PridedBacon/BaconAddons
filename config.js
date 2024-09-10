@@ -1,4 +1,5 @@
 import {
+    Color,
     @ButtonProperty,
     @CheckboxProperty,
     @ColorProperty,
@@ -11,33 +12,33 @@ import {
     @NumberProperty,
     @ParagraphProperty,
     @DecimalSliderProperty,
-    Color
-} from '../Vigilance/index';
+} from "../Vigilance/index";
 
 import { essentialNotification } from "./utils/utils";
 
 const Desktop = java.awt.Desktop;
 const File = java.io.File;
 
-
 @Vigilant("BaconAddons", "BaconAddons", {
     getCategoryComparator: () => (a, b) => {
         const categories = ["General", "Dungeons", "Garden", "ESP", "Misc"];
         return categories.indexOf(a.name) - categories.indexOf(b.name);
-    }
+    },
 })
 class Config {
     constructor() {
-        this.initialize(this)
+        this.initialize(this);
 
         this.addDependency("Force Superbounce", "Automatic Lava Superbounce");
         this.addDependency("Triggerbot Shift Behaviour", "Enable Chest & Lever Triggerbot");
-        this.addDependency("Autostonk/Slice Blocks when Triggerbot could fire", "Enable Chest & Lever Triggerbot");
+        this.addDependency(
+            "Autostonk/Slice Blocks when Triggerbot could fire",
+            "Enable Chest & Lever Triggerbot"
+        );
         this.addDependency("Pest Box Color", "Highlight pests");
-        this.addDependency("Harp Solver Delay", "Enable Harp Solver")
+        this.addDependency("Harp Solver Delay", "Enable Harp Solver");
+        // this.addDependency("Teleport Delay", "Auto tp Garden on void");
     }
-
-    
 
     //----------General----------
     //Party Commands Toggle
@@ -45,85 +46,67 @@ class Config {
         name: "Enable Party Commands",
         description: "Enable Party Commands for party members e.g. !warp => /p warp",
         category: "General",
-        subcategory: "Chat"
+        subcategory: "Chat",
     })
-    enablePartyCommands = false
-    
-    
+    enablePartyCommands = false;
+
     //Slot For Instant Ghost Pick Command
     @SelectorProperty({
         name: "Default Slot for Ghost Pick Command",
-        description: "Select the slot for the Ghost Pick to be created in\nGeneral Usage: /gpick <slot>[1-9] <tool> <EffiLVL>[0-127]",
+        description:
+            "Select the slot for the Ghost Pick to be created in\nGeneral Usage: /gpick <slot>[1-9] <tool> <EffiLVL>[0-127]",
         category: "Dungeons",
         subcategory: "Ghost Pick",
-        options: [
-            "1",
-            "2",
-            "3",
-            "4",
-            "5",
-            "6",
-            "7",
-            "8",
-            "9"
-        ]
+        options: ["1", "2", "3", "4", "5", "6", "7", "8", "9"],
     })
     ghostPickSlot = 6;
 
     //Default Efficiency Level
     @SelectorProperty({
         name: "Default Efficiency Level for Ghost Pick",
-        description: "Select the Efficiency Level for the Ghost Pick\nGeneral Usage: /gpick <slot>[1-9] <tool> <EffiLVL>[0-127]",
+        description:
+            "Select the Efficiency Level for the Ghost Pick\nGeneral Usage: /gpick <slot>[1-9] <tool> <EffiLVL>[0-127]",
         category: "Dungeons",
         subcategory: "Ghost Pick",
-        options: [
-            "0",
-            "6",
-            "10",
-            "12",
-            "127"
-        ]
+        options: ["0", "6", "10", "12", "127"],
     })
     ghostPickEffiLVL = 3;
 
     //Auto-Mode Default
     @SwitchProperty({
         name: "Auto-Mode as default Tool-Mode",
-        description: "Automatically creates the most usefull item by default, instead of just the pickaxe",
+        description:
+            "Automatically creates the most usefull item by default, instead of just the pickaxe",
         category: "Dungeons",
-        subcategory: "Ghost Pick"
+        subcategory: "Ghost Pick",
     })
-    ghostPickDefaultAutoMode = true
-
-
+    ghostPickDefaultAutoMode = true;
 
     //Automatically Stonk Predevice
     @SwitchProperty({
         name: "Automatically Pre-Stonk Predevice",
         description: "Automatically creates Ghostblocks for Predevice on Portal entry",
         category: "Dungeons",
-        subcategory: "F7"
+        subcategory: "F7",
     })
-    StonkF7Predevice = false
+    StonkF7Predevice = false;
 
     //Automatic Lava Superbounce
     @SwitchProperty({
         name: "Automatic Lava Superbounce",
         description: "Automatically places a chest under you if you sneak, so you always superbounce",
         category: "Dungeons",
-        subcategory: "F7"
+        subcategory: "F7",
     })
-    enableAutoSuperbounce = false
+    enableAutoSuperbounce = false;
 
     @SwitchProperty({
         name: "Force Superbounce",
         description: "Will always work in F7",
         category: "Dungeons",
-        subcategory: "F7"
+        subcategory: "F7",
     })
-    superbounceForceToggle = false
-
-
+    superbounceForceToggle = false;
 
     //Ghost Key
     @SwitchProperty({
@@ -131,8 +114,7 @@ class Config {
         description: "Automatically creates Ghostblocks while pressing the Key (MC Settings)",
         category: "Dungeons",
     })
-    enableGhostBlockKeybind = false
-
+    enableGhostBlockKeybind = false;
 
     //Ghost Key
     @SwitchProperty({
@@ -140,8 +122,7 @@ class Config {
         description: "Replaces the reappearing Block with air",
         category: "Dungeons",
     })
-    enableBreakGhostblock = false
-
+    enableBreakGhostblock = false;
 
     //Triggerbot
     //Enable
@@ -149,9 +130,9 @@ class Config {
         name: "Enable Chest & Lever Triggerbot",
         description: "Automatically clicks on Chests and Levers once",
         category: "Dungeons",
-        subcategory: "Triggerbot"
+        subcategory: "Triggerbot",
     })
-    enableTriggerBot = false
+    enableTriggerBot = false;
 
     //Shift Behavior [Requires/Blocks/Nothing]
     @SelectorProperty({
@@ -159,12 +140,7 @@ class Config {
         description: "If the Triggerbot should fire when (not) sneaking",
         category: "Dungeons",
         subcategory: "Triggerbot",
-        options: [
-            "Always",
-            "Click when no GUI",
-            "Requires Sneak",
-            "Supress while Sneaking"
-        ]
+        options: ["Always", "Click when no GUI", "Requires Sneak", "Supress while Sneaking"],
     })
     triggerbotShiftBehaviour = 1;
 
@@ -173,42 +149,38 @@ class Config {
         name: "Autostonk/Slice Blocks when Triggerbot could fire",
         description: "Automatically create Ghostblocks if there is a Chest behind a wall",
         category: "Dungeons",
-        subcategory: "Triggerbot"
+        subcategory: "Triggerbot",
     })
-    triggerbotAutostonk = false
-
-    
+    triggerbotAutostonk = false;
 
     //Dungeon Highlight
     @SwitchProperty({
         name: "Dungeon Highlight",
-        description: "Highlights certain Entitys in Dungeons like:\n - Fels\n - Shadow Assassins\n - Wither & Blood Keys",
+        description:
+            "Highlights certain Entitys in Dungeons like:\n - Fels\n - Shadow Assassins\n - Wither & Blood Keys",
         category: "Dungeons",
-        subcategory: "Highlight"
+        subcategory: "Highlight",
     })
-    enableDungeonHighlight = false
-
+    enableDungeonHighlight = false;
 
     //AutoStonk thru walls
     @SwitchProperty({
         name: "Replace Stairs with slabs",
         description: "Funni feature nobody asked for",
         category: "Dungeons",
-        subcategory: "Useless"
+        subcategory: "Useless",
     })
-    enableAutoStair = false
-
+    enableAutoStair = false;
 
     //----------Garden----------
-
 
     @SwitchProperty({
         name: "Highlight pests",
         description: "Toggle ESP for Pests",
         category: "Garden",
-        subcategory: "Pests"
+        subcategory: "Pests",
     })
-    highlightPests = false
+    highlightPests = false;
 
     @ColorProperty({
         name: "Pest Box Color",
@@ -220,22 +192,35 @@ class Config {
 
     @SwitchProperty({
         name: "Auto tp Garden on void",
-        description: "Automatically teleports you to your Garden Spawnpoint when falling into the void while holding a farming tool",
+        description:
+            "Automatically teleports you to your Garden Spawnpoint when falling into the void while holding a farming tool",
         category: "Garden",
-        subcategory: "Farming"
+        subcategory: "Farming",
     })
-    enableAutoGardenTP = false
+    enableAutoGardenTP = false;
 
+    @DecimalSliderProperty({
+        name: "Teleport Delay",
+        description: "The Delay after which to teleport the player",
+        category: "Garden",
+        subcategory: "Farming",
+        minF: 0.0,
+        maxF: 3.0,
+        decimalPlaces: 2,
+    })
+    autoGardenTPdelay = 1.00;
 
     @ButtonProperty({
         name: "Open Farming Macros Folder",
         description: "Opens '.../BaconAddons/data/farmingMacros'",
         category: "Garden",
         subcategory: "Macro",
-        placeholder: "Open"
+        placeholder: "Open",
     })
     openMacrosFolder() {
-        Desktop.getDesktop().open(new File("config/ChatTriggers/modules/BaconAddons/data/farmingMacros"));
+        Desktop.getDesktop().open(
+            new File("config/ChatTriggers/modules/BaconAddons/data/farmingMacros")
+        );
     }
 
     @ButtonProperty({
@@ -243,16 +228,23 @@ class Config {
         description: "Toggle the 'Pause on lost Focus' Behaviour (or just press F3+P)",
         category: "Garden",
         subcategory: "Macro",
-        placeholder: "Toggle"
+        placeholder: "Toggle",
     })
     togglePauseOnLostFocus() {
-        Client.getSettings().getSettings().field_82881_y = !Client.getSettings().getSettings().field_82881_y
-        essentialNotification("BaconAddons", `${Client.getSettings().getSettings().field_82881_y ? "Enabled" : "Disabled"} Pause on lost Focus`)
+        Client.getSettings().getSettings().field_82881_y =
+            !Client.getSettings().getSettings().field_82881_y;
+        essentialNotification(
+            "BaconAddons",
+            `${
+                Client.getSettings().getSettings().field_82881_y ? "Enabled" : "Disabled"
+            } Pause on lost Focus`
+        );
     }
 
     @TextProperty({
         name: "Discord ID",
-        description: "The discord ID to ping when a macro auto-disables.\nLeave empty to disable\n&cThis has to be the ID not username!",
+        description:
+            "The discord ID to ping when a macro auto-disables.\nLeave empty to disable\n&cThis has to be the ID not username!",
         category: "Garden",
         subcategory: "Macro",
     })
@@ -260,7 +252,8 @@ class Config {
 
     @TextProperty({
         name: "Discord Webhook URL",
-        description: "The discord Webhook URL to post to when a macro auto-disables.\nLeave empty to disable",
+        description:
+            "The discord Webhook URL to post to when a macro auto-disables.\nLeave empty to disable",
         category: "Garden",
         subcategory: "Macro",
     })
@@ -272,7 +265,7 @@ class Config {
         category: "Garden",
         subcategory: "Macro",
         min: 0,
-        max: 8
+        max: 8,
     })
     discordPingMinPests = 0;
 
@@ -282,7 +275,7 @@ class Config {
         category: "Garden",
         subcategory: "Macro",
         min: 0,
-        max: 5
+        max: 5,
     })
     discordPingMinVisitors = 0;
 
@@ -294,11 +287,8 @@ class Config {
     })
     discordPingTimeContest = "";
 
-
-
-
     //----------MISC----------
-    
+
     /*
     @SwitchProperty({
         name: "Disable Blindness",
@@ -308,42 +298,39 @@ class Config {
     })
     ASMdisableBlindness = false
     */
-    
+
     @SwitchProperty({
         name: "Disable Nausea",
         description: "Removes Nausea from the Player",
         category: "Misc",
-        subcategory: "Camera"
+        subcategory: "Camera",
     })
-    disableNausea = false
-    
+    disableNausea = false;
 
     @SwitchProperty({
         name: "Enable Trapper ESP",
         description: "Tries to display ESP on the Mob\nSometimes Displays other People's/Glitched Mobs",
         category: "Misc",
-        subcategory: "Trapper"
+        subcategory: "Trapper",
     })
-    enableTrapperHelper = false
-
+    enableTrapperHelper = false;
 
     @SwitchProperty({
         name: "Enable Dragon Features",
         description: "Misc Dragon/End Features",
         category: "Misc",
-        subcategory: "End"
+        subcategory: "End",
     })
-    enableDragonFeatures = false
+    enableDragonFeatures = false;
 
     //Harp Solver
     @SwitchProperty({
         name: "Enable Harp Solver",
         description: "Automatically clicks in the Harp",
         category: "Misc",
-        subcategory: "Harp"
+        subcategory: "Harp",
     })
-    enableHarpSolver = false
-
+    enableHarpSolver = false;
 
     @SliderProperty({
         name: "Harp Solver Delay",
@@ -351,10 +338,17 @@ class Config {
         category: "Misc",
         subcategory: "Harp",
         min: 0,
-        max: 5
+        max: 5,
     })
     clickDelayHarpSolver = 2;
-}
 
+    @SwitchProperty({
+        name: "Chat Protection",
+        description: "Prevents you from sending messages contaning the words (m)acr(o) and bac\nIf you send a command, this filter is ignored",
+        category: "Misc",
+        subcategory: "Chat",
+    })
+    enableChatProtection = true;
+}
 
 export default new Config();

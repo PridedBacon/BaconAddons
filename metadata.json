@@ -17,7 +17,7 @@
         "requestV2"
     ],
     "helpMessage": "&d[Bacon] &eRun &8`/bac`&e or &8`/bac help`&e to get started!",
-    "version": "1.2.15",
+    "version": "1.2.16",
     "$changelog": {
         "1.0": ["Initial Release!"],
         "1.1": ["Many new features!"],
@@ -45,6 +45,11 @@
         "1.2.12": ["Added Option to disable Nausea"],
         "1.2.13": ["Trapper Feature Improvements"],
         "1.2.14": ["Added &e/bac version &3command"],
-        "1.2.15": ["Added Farming Macros"]
+        "1.2.15": ["Added Farming Macros"],
+        "1.2.16": [
+            "Added Chat Protection",
+            "Removed Debug Message in Farming Macro",
+            "Added Auto Garden TP Delay"
+        ]
     }
 }

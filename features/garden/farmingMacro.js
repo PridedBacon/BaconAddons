@@ -93,7 +93,7 @@ const macroTasks = register("tick", () => {
         currentTask = nextTask;
         lastActionSwitch = Date.now();
 
-        return ChatLib.chat(MSGPREFIX + `Now executing &a${nextTask}&e!`);
+        return; //ChatLib.chat(MSGPREFIX + `Now executing &a${nextTask}&e!`);
     }
 
     for (let keyName of Object.keys(macroConfig[currentTask]["KEYPRESSES"])) {
@@ -160,18 +160,25 @@ function getNextTask(currentTask) {
 register("worldLoad", () => disableMacro());
 
 let teleportAlreadyDetected = false;
+let willTeleportSoon = false;
 
 registerWhen(
     register("tick", () => {
         if (Math.abs(Player.getX()) > 240 || Math.abs(Player.getZ()) > 240) {
             if (teleportAlreadyDetected) return;
             teleportAlreadyDetected = true;
-            if (!isHoldingFarmingTool()) return;
+            if (willTeleportSoon || !isHoldingFarmingTool()) return;
 
-            currentTask = Object.keys(macroConfig)[0];
+            willTeleportSoon = true;
 
-            ChatLib.chat(MSGPREFIX + "Teleporting to Garden!");
-            ChatLib.command("warp garden");
+            setTimeout(() => {
+                currentTask = Object.keys(macroConfig)[0];
+
+                ChatLib.chat(MSGPREFIX + "Teleporting to Garden!");
+                ChatLib.command("warp garden");
+
+                willTeleportSoon = false;
+            }, Config.autoGardenTPdelay * 1000);
         } else teleportAlreadyDetected = false;
     }),
     () => Config.enableAutoGardenTP || isEnabled,
