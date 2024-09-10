@@ -17,7 +17,7 @@
         "requestV2"
     ],
     "helpMessage": "&d[Bacon] &eRun &8`/bac`&e or &8`/bac help`&e to get started!",
-    "version": "1.2.16",
+    "version": "1.2.17",
     "$changelog": {
         "1.0": ["Initial Release!"],
         "1.1": ["Many new features!"],
@@ -50,6 +50,7 @@
             "Added Chat Protection",
             "Removed Debug Message in Farming Macro",
             "Added Auto Garden TP Delay"
-        ]
+        ],
+        "1.2.17": ["Macro: Dont walk when flying"]
     }
 }

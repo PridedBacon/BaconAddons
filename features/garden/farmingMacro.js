@@ -44,8 +44,20 @@ let pestNotified = false;
 let visitorNotified = false;
 let contestNotified = false;
 
+let isFlying = false;
+
 const macroTasks = register("tick", () => {
     if (Client.isInGui()) return;
+
+    if (Player.isFlying() && !isFlying) {
+        isFlying = true;
+
+        for (let key of Object.values(keys)) {
+            key.setState(false);
+        }
+    } else if (!Player.isFlying()) isFlying = false;
+
+    if (!Player.getPlayer().field_70122_E) return;
 
     if (
         Math.abs(initialYaw - Player.getYaw()) > 0.5 ||
@@ -107,8 +119,6 @@ const macroTasks = register("tick", () => {
 }).unregister();
 
 function getNextTask(currentTask) {
-    if (!Player.getPlayer().field_70122_E) return currentTask; // If is in air (-> falling) keep pressing
-
     const nextTask = macroConfig[currentTask]["NEXT"];
 
     const [pX, pY, pZ] = [Player.getX(), Player.getY(), Player.getZ()];
