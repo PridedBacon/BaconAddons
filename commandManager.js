@@ -103,48 +103,68 @@ register("command", (...args) => {
                             "Use &8`/bac macro stop`&e to stop a farming Macro!"
                     );
                 } else if (args[1]?.toLowerCase() === "start") {
-                    const filenames = enableMacro(args[2] || " ");
+                    const macroArguments = args.slice(3).map((e) => e.toLowerCase());
+                    const [code, values] = enableMacro(args[2] || " ", macroArguments);
 
-                    if (!filenames) {
-                        ChatLib.chat(
-                            new TextComponent(
-                                MSGPREFIX + `Started Macro: &a${args[2]}&e!  &c&l[DISABLE]`
-                            )
-                                .setClick("run_command", "/bac macro stop")
-                                .setHover("show_text", "&eClick to disable this Macro!")
-                        );
-                    } else {
-                        if (filenames.length === 0) {
+                    switch (code) {
+                        case -1: // Stop
+                            break;
+                        case 0: // Start
+                            const startArgs =
+                                macroArguments.length !== 0 ? ` (${macroArguments.join(", ")})` : "";
+                            ChatLib.chat(
+                                new TextComponent(
+                                    MSGPREFIX +
+                                        `Started Macro: &a${args[2]}${startArgs}&e!  &c&l[DISABLE]`
+                                )
+                                    .setClick("run_command", "/bac macro stop")
+                                    .setHover("show_text", "&eClick to disable this Macro!")
+                            );
+                            break;
+                        case 1:
+                            if (values.length === 0) {
+                                ChatLib.chat(
+                                    MSGPREFIX +
+                                        "No Macros created! Create a Macro-JSON file in &8`.minecraft/config/ChatTriggers/modules/BaconAddons/data/farmingMacros/`&e!"
+                                );
+                            } else {
+                                const msg = new Message(
+                                    MSGPREFIX +
+                                        `Macro file with name &a${
+                                            args[2] || "???"
+                                        }&e not found!\n&eAvailable (file)names:`
+                                );
+                                const validFilenames = values
+                                    .map((e) =>
+                                        e
+                                            .replace(/\.json$/i, "")
+                                            .split("/")
+                                            .pop()
+                                    )
+                                    .map((e) =>
+                                        new TextComponent("&a" + e)
+                                            .setClick("run_command", "/bac macro start " + e)
+                                            .setHover("show_text", "&eClick to start: &a" + e)
+                                    );
+
+                                for (let comp of validFilenames) {
+                                    msg.addTextComponent("\n&d - ").addTextComponent(comp);
+                                }
+
+                                msg.chat();
+                            }
+                            break;
+                        case 2:
+                            const [unknownArg, possibleArgs] = values;
+
                             ChatLib.chat(
                                 MSGPREFIX +
-                                    "No Macros created! Create a Macro-JSON file in &8`.minecraft/config/ChatTriggers/modules/BaconAddons/data/farmingMacros/`&e!"
+                                    `Unknown Argument: &c'${unknownArg}'\n` +
+                                    MSGPREFIX +
+                                    "Possible Arguments: &a" +
+                                    possibleArgs.join("&e, &a")
                             );
-                        } else {
-                            const msg = new Message(
-                                MSGPREFIX +
-                                    `Macro file with name &a${
-                                        args[2] || "???"
-                                    }&e not found!\n&eAvailable (file)names:`
-                            );
-                            const validFilenames = filenames
-                                .map((e) =>
-                                    e
-                                        .replace(/\.json$/i, "")
-                                        .split("/")
-                                        .pop()
-                                )
-                                .map((e) =>
-                                    new TextComponent("&a" + e)
-                                        .setClick("run_command", "/bac macro start " + e)
-                                        .setHover("show_text", "&eClick to start: &a" + e)
-                                );
-
-                            for (let comp of validFilenames) {
-                                msg.addTextComponent("\n&d - ").addTextComponent(comp);
-                            }
-
-                            msg.chat();
-                        }
+                            break;
                     }
                 } else disableMacro();
 

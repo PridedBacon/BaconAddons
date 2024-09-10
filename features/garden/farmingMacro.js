@@ -38,6 +38,9 @@ let timeout = 0;
 let lastActionSwitch = 0;
 let macroConfig = {};
 
+let macroArgs = new Map();
+const possibleMacroArgs = ["-debug", "-nospawn", "-nolock", "-nodiscord", "-notp"];
+
 let initialYaw = 0;
 let initialPitch = 0;
 let pestNotified = false;
@@ -105,7 +108,8 @@ const macroTasks = register("tick", () => {
         currentTask = nextTask;
         lastActionSwitch = Date.now();
 
-        return; //ChatLib.chat(MSGPREFIX + `Now executing &a${nextTask}&e!`);
+        if (macroArgs.get("-debug")) ChatLib.chat(MSGPREFIX + `Now executing &a${nextTask}&e!`);
+        return;
     }
 
     for (let keyName of Object.keys(macroConfig[currentTask]["KEYPRESSES"])) {
@@ -191,32 +195,51 @@ registerWhen(
             }, Config.autoGardenTPdelay * 1000);
         } else teleportAlreadyDetected = false;
     }),
-    () => Config.enableAutoGardenTP || isEnabled,
+    () => Config.enableAutoGardenTP || (isEnabled && !macroArgs.get("-notp")),
     "Garden"
 );
 
 let lastMacroName = "";
 
-export function enableMacro(name) {
+export function enableMacro(name, args = []) {
     if (name === lastMacroName) {
         disableMacro();
-        return true;
+        return [-1, null];
     }
+
+    const argValues = new Map();
+
+    if (args.some((e) => !possibleMacroArgs.includes(e)))
+        return [2, [args.find((e) => !possibleMacroArgs.includes(e)), possibleMacroArgs]];
+
+    for (let arg of possibleMacroArgs) {
+        argValues.set(
+            arg,
+            args.some((e) => e === arg)
+        );
+    }
+
+    macroArgs = argValues;
 
     const file_content = FileLib.read("BaconAddons", `data/farmingMacros/${name}.json`);
 
     if (!file_content) {
-        return new File("config/ChatTriggers/modules/BaconAddons/data/farmingMacros")
-            .list()
-            .filter((e) => e.toLowerCase().endsWith(".json"));
+        return [
+            1,
+            new File("config/ChatTriggers/modules/BaconAddons/data/farmingMacros")
+                .list()
+                .filter((e) => e.toLowerCase().endsWith(".json")),
+        ];
     }
 
-    ChatLib.command("setspawnlocation");
+    if (!macroArgs.get("-nospawn")) ChatLib.command("setspawnlocation");
 
-    if (Client.settings.getSettings().field_74341_c > 0)
-        originalSensitivity = Client.settings.getSettings().field_74341_c;
+    if (!macroArgs.get("-nolock")) {
+        if (Client.settings.getSettings().field_74341_c > 0)
+            originalSensitivity = Client.settings.getSettings().field_74341_c;
 
-    Client.settings.getSettings().field_74341_c = -(1 / 3);
+        Client.settings.getSettings().field_74341_c = -(1 / 3);
+    }
 
     lastMacroName = name;
 
@@ -279,6 +302,8 @@ export function enableMacro(name) {
         isEnabled = true;
         macroTasks.register();
     }, 400);
+
+    return [0, null];
 }
 
 export function disableMacro(panikReason = null) {
@@ -287,7 +312,7 @@ export function disableMacro(panikReason = null) {
         isEnabled = false;
         lastMacroName = "";
 
-        Client.settings.getSettings().field_74341_c = originalSensitivity;
+        if (!macroArgs.get("-nolock")) Client.settings.getSettings().field_74341_c = originalSensitivity;
 
         for (let key of Object.values(keys)) {
             key.setState(false);
@@ -307,7 +332,7 @@ export function disableMacro(panikReason = null) {
 
             console.log("Posting Warning to Discord!");
 
-            postToDiscord(`# 🚨⚠️ ${panikReason} ⚠️🚨`);
+            if (!macroArgs.get("-nodiscord")) postToDiscord(`# 🚨⚠️ ${panikReason} ⚠️🚨`);
         }
 
         ChatLib.chat(MSGPREFIX + "Disabled current Macro!");
@@ -424,7 +449,7 @@ registerWhen(
             contestNotified = false;
         }
     }).setFps(1),
-    () => isEnabled,
+    () => isEnabled && !macroArgs.get("-nodiscord"),
     "Garden"
 );
 
@@ -442,11 +467,11 @@ disableMacroKey.registerKeyPress(() => disableMacro());
 register("gameLoad", () => {
     if (Client.settings.getSettings().field_74341_c > 0)
         originalSensitivity = Client.settings.getSettings().field_74341_c;
-});
+}).setPriority(Priority.HIGHEST);
 
 register("gameUnload", () => {
     if (isEnabled && originalSensitivity > 0)
         Client.settings.getSettings().field_74341_c = originalSensitivity;
-});
+}).setPriority(Priority.HIGHEST);
 
 //Doesn't Work ??
