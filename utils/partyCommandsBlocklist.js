@@ -2,12 +2,12 @@ import PogObject from "../../PogData";
 import { MSGPREFIX } from "./utils";
 
 const blocklist = new PogObject(
-    "BaconAddons",
+    "BaconAddonsData",
     {
         igns: [],
-        trustedPlayers: ["taxzero", "extrabenny", "taxzero11", "pridedbacon2279"],
+        trustedPlayers: ["taxzero", "taxzero1", "taxzero11", "extrabenny", "pridedbacon2279"],
     },
-    "./data/partyCommandsBlocklist.json"
+    "partyCommandsBlocklist.json"
 );
 
 export function addToPCBlocklist(ign) {

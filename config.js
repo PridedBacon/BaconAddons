@@ -19,7 +19,7 @@ import { essentialNotification } from "./utils/utils";
 const Desktop = java.awt.Desktop;
 const File = java.io.File;
 
-@Vigilant("BaconAddons", "BaconAddons", {
+@Vigilant("BaconAddonsData", "BaconAddons", {
     getCategoryComparator: () => (a, b) => {
         const categories = ["General", "Dungeons", "Garden", "ESP", "Misc"];
         return categories.indexOf(a.name) - categories.indexOf(b.name);
@@ -345,10 +345,18 @@ class Config {
     @SwitchProperty({
         name: "Chat Protection",
         description: "Prevents you from sending messages contaning the words (m)acr(o) and bac\nIf you send a command, this filter is ignored",
-        category: "Misc",
+        category: "General",
         subcategory: "Chat",
     })
     enableChatProtection = true;
+
+    @SwitchProperty({
+        name: "Primal Fear Helper",
+        description: "Automatically sends/clicks the right chat message",
+        category: "General",
+        subcategory: "Chat",
+    })
+    enablePrimalFearHelper = false;
 }
 
 export default new Config();
