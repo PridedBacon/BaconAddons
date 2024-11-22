@@ -40,6 +40,8 @@ let macroConfig = {};
 
 let macroArgs = new Map();
 const possibleMacroArgs = ["-debug", "-nospawn", "-nolock", "-nodiscord", "-notp"];
+//Teleport to Garden Spawn
+//Start in Mode X
 
 let initialYaw = 0;
 let initialPitch = 0;
@@ -221,12 +223,12 @@ export function enableMacro(name, args = []) {
 
     macroArgs = argValues;
 
-    const file_content = FileLib.read("BaconAddons", `data/farmingMacros/${name}.json`);
+    const file_content = FileLib.read("BaconAddonsData", `farmingMacros/${name}.json`);
 
     if (!file_content) {
         return [
             1,
-            new File("config/ChatTriggers/modules/BaconAddons/data/farmingMacros")
+            new File("config/ChatTriggers/modules/BaconAddonsData/farmingMacros")
                 .list()
                 .filter((e) => e.toLowerCase().endsWith(".json")),
         ];

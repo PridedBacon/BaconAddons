@@ -4,7 +4,7 @@ import { registerWhen, MSGPREFIX } from "../../utils/utils";
 let fileNotFound = false;
 let blocks;
 
-if (!FileLib.exists("BaconAddons", "./data/F7preDeviceStonk.json")) {
+if (!FileLib.exists("BaconAddons", "data/F7preDeviceStonk.json")) {
     ChatLib.chat(
         MSGPREFIX +
             "Could not find F7 Pre-Device Data!\n" +
@@ -13,7 +13,7 @@ if (!FileLib.exists("BaconAddons", "./data/F7preDeviceStonk.json")) {
     );
     fileNotFound = true;
 } else {
-    blocks = JSON.parse(FileLib.read("BaconAddons", "./data/F7preDeviceStonk.json"));
+    blocks = JSON.parse(FileLib.read("BaconAddons", "data/F7preDeviceStonk.json"));
 }
 
 registerWhen(
@@ -73,7 +73,7 @@ register("command", () => {
 }).setName("start");
 
 register("command", () => {
-    FileLib.write("BaconAddons", "./data/F7preDeviceStonk.json", JSON.stringify(blocks));
+    FileLib.write("BaconAddons", "data/F7preDeviceStonk.json", JSON.stringify(blocks));
     console.log(JSON.stringify(blocks));
 }).setName("end");
 */

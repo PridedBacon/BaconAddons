@@ -159,13 +159,13 @@ export function RequireNoCache(place) {
  * @param {Entity} entity - The entity whose skull's texture you want.
  * @returns {String|null}
  */
-export const getEntitySkullTextureInSlot = (entity, slot) => {
+export const getEntitySkullID = (entity) => {
     if (!entity || !(entity instanceof Entity)) return null;
     let helm = entity.getEntity().func_71124_b(4);
     if (!helm) return null;
     let item = new Item(helm);
     if (!item || item.getID() !== 397 || item.getMetadata() !== 3) return null;
-    return getSkullTexture(item);
+    return item.getNBT()?.toObject()?.tag?.SkullOwner?.Id;
 };
 
 const farmingToolsID = new Set([
